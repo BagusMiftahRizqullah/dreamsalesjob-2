@@ -1,0 +1,36 @@
+{
+  "id": "job-004",
+  "slug": "remote-sdr-saas",
+  "title": "Sales Development Rep (Remote)",
+  "destination": "remote",
+  "type": "full-time",
+  "location": "Remote (Asia Timezone)",
+  "salary": {
+    "min": 50000,
+    "max": 80000,
+    "currency": "USD",
+    "period": "year"
+  },
+  "description": "We are a Series B fintech startup looking for hungry SDRs to join our remote team. You can work from anywhere in Asia as long as you can cover the Australian market hours (6 AM - 2 PM BKK time).",
+  "requirements": [
+    "1+ year of B2B sales experience",
+    "Familiarity with Salesforce and Outreach",
+    "Self-motivated and disciplined",
+    "Excellent written and verbal English"
+  ],
+  "responsibilities": [
+    "Generate qualified leads through cold calling and emailing",
+    "Book demos for Account Executives",
+    "Research target accounts and identify key decision-makers",
+    "Maintain accurate records in CRM"
+  ],
+  "postedDate": "2024-05-25",
+  "employer": {
+    "name": "FinStream",
+    "logo": "/images/employers/finstream.png",
+    "verified": true,
+    "website": "https://example.com"
+  },
+  "industry": "SaaS",
+  "seniority": "Entry-Level"
+}

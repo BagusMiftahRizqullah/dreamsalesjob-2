@@ -1,0 +1,36 @@
+{
+  "id": "job-006",
+  "slug": "enterprise-ae-singapore",
+  "title": "Enterprise Account Executive",
+  "destination": "singapore",
+  "type": "full-time",
+  "location": "Singapore (CBD)",
+  "salary": {
+    "min": 150000,
+    "max": 300000,
+    "currency": "SGD",
+    "period": "year"
+  },
+  "description": "A global cybersecurity leader is seeking a seasoned Enterprise AE to drive growth in the APAC region. Based in our Singapore HQ, you will be responsible for closing large deals with Fortune 500 companies.",
+  "requirements": [
+    "7+ years of enterprise software sales experience",
+    "Track record of closing $500k+ deals",
+    "Existing network of C-level contacts in APAC",
+    "Strategic thinker with a consultative sales approach"
+  ],
+  "responsibilities": [
+    "Develop and execute a territory plan for APAC",
+    "Lead complex sales cycles involving multiple stakeholders",
+    "Work with solution engineers to deliver compelling demos",
+    "Forecast revenue accurately"
+  ],
+  "postedDate": "2024-05-10",
+  "employer": {
+    "name": "CyberShield APAC",
+    "logo": "/images/employers/cybershield.png",
+    "verified": true,
+    "website": "https://example.com"
+  },
+  "industry": "Technology",
+  "seniority": "Expert"
+}

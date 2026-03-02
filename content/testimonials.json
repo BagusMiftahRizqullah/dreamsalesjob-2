@@ -1,0 +1,62 @@
+[
+  {
+    "id": "t1",
+    "name": "Sarah Jenkins",
+    "role": "Sales Development Rep",
+    "company": "TechFlow Bali",
+    "location": "Canggu, Bali",
+    "image": "https://i.pravatar.cc/150?img=1",
+    "content": "I was skeptical about moving halfway across the world, but Dream Sales Jobs made it seamless. The team helped me with my visa, and I was closing deals by the pool within 3 weeks. My quality of life has skyrocketed.",
+    "type": "candidate"
+  },
+  {
+    "id": "t2",
+    "name": "James Mitchell",
+    "role": "Senior Closer",
+    "company": "WealthGrid",
+    "location": "Bangkok, Thailand",
+    "image": "https://i.pravatar.cc/150?img=11",
+    "content": "The caliber of roles on this platform is unmatched. I landed a role with a $150k OTE in Bangkok. No tax, amazing food, and a high-performance culture. Best career move I've ever made.",
+    "type": "candidate"
+  },
+  {
+    "id": "t3",
+    "name": "Emma Thompson",
+    "role": "Recruitment Consultant",
+    "company": "Global Search",
+    "location": "Ho Chi Minh City, Vietnam",
+    "image": "https://i.pravatar.cc/150?img=5",
+    "content": "Vietnam is an underrated gem. I'm saving 70% of my income while living in a luxury apartment. Dream Sales Jobs connected me with a British-owned agency that truly values its staff.",
+    "type": "candidate"
+  },
+  {
+    "id": "t4",
+    "name": "David Ross",
+    "role": "CEO",
+    "company": "InvestAsia Group",
+    "location": "Bali & Singapore",
+    "image": "https://i.pravatar.cc/150?img=8",
+    "content": "We've hired 5 closers through Dream Sales Jobs this year. The candidates are pre-vetted and culturally aligned. It saves us weeks of screening time.",
+    "type": "employer"
+  },
+  {
+    "id": "t5",
+    "name": "Michael Chen",
+    "role": "Head of Sales",
+    "company": "CryptoSecure",
+    "location": "Remote / Thailand",
+    "image": "https://i.pravatar.cc/150?img=3",
+    "content": "Finding reliable remote sales talent is hard. Dream Sales Jobs filters for the top 1%. We built our entire SDR team through their platform.",
+    "type": "employer"
+  },
+  {
+    "id": "t6",
+    "name": "Sophie Williams",
+    "role": "Founder",
+    "company": "ResortLife Properties",
+    "location": "Phuket, Thailand",
+    "image": "https://i.pravatar.cc/150?img=9",
+    "content": "Our business relies on high-ticket closers who can build trust instantly. The candidates from Dream Sales Jobs are polished, professional, and hungry. Highly recommended.",
+    "type": "employer"
+  }
+]

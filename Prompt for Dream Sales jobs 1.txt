@@ -1,0 +1,163 @@
+You are a senior product engineer + technical SEO lead. Build a production-ready Next.js website (Next.js 14+ / App Router / TypeScript) for a specialist recruitment agency brand called “Dream Sales Jobs”.
+
+GOAL
+Rebuild the current DreamSalesJobs website so it looks premium (modern luxury travel + SaaS trust), converts better, and ranks better in Google. Target traffic: Australia, New Zealand, United Kingdom. Niche: High-ticket sales roles in Bali, Vietnam, Thailand, and remote roles worldwide.
+
+REFERENCE INSPIRATION
+Use the trust architecture and professional feel of Citrus Connect (numbers, proof blocks, team credibility, clear process) as inspiration, without copying design directly. Keep destination-led appeal like DreamSalesJobs, but add stronger trust/authority layers.
+
+TECH STACK REQUIREMENTS
+- Next.js 14+ App Router
+- TypeScript
+- Tailwind CSS (preferred) OR CSS Modules (choose one and be consistent)
+- Use next/image for images
+- Use next/font for typography
+- State minimal: prefer server components, use client components only where needed
+- Content source: start with local JSON/MDX so it works without a database
+  - jobs: /content/jobs/*.json
+  - guides/blog: /content/guides/*.mdx
+  - testimonials: /content/testimonials.json
+- Add basic CMS readiness: content folder structure and types so it can later be swapped to a headless CMS
+
+CORE PAGES (MVP)
+1) Homepage: /
+2) Jobs listing: /jobs
+3) Job detail: /jobs/[slug]
+4) Destinations hub: /destinations
+5) Destination pages: /destinations/bali, /destinations/vietnam, /destinations/thailand, /destinations/remote
+6) For Candidates: /candidates
+7) For Employers: /employers
+8) About: /about
+9) Contact: /contact
+10) Guides/Blog hub: /guides
+11) Guide detail: /guides/[slug]
+12) Apply: /apply (candidate form)
+13) Hire request: /hire (employer form)
+14) Legal: /privacy, /terms
+
+LOCALIZATION / GEO STRATEGY
+Implement “Option A”: single site with geo landing pages:
+- /au, /nz, /uk
+Each geo page should be meaningfully unique (not duplicate) and tailored:
+- language/spelling: en-AU, en-NZ, en-GB
+- examples: “Aussies, Kiwis, Brits”
+- CTA copy and small differences in FAQs (currency mentions, time zones)
+Do NOT do forced IP redirects. Provide a gentle region switcher.
+
+DESIGN SYSTEM / UI REQUIREMENTS
+Create a clean component library and consistent layout:
+- Header with primary nav: Jobs, Destinations, Candidates, Employers, Guides, About
+- Sticky primary CTA button: “Submit CV”
+- Visual style: premium, airy, big typography, high-contrast readability, luxury travel imagery used sparingly
+- Include “trust images”: real-looking team photos placeholders, testimonial avatars, partner logos placeholders, verification badge icons, process icons
+- Keep accessibility: semantic HTML, good contrast, keyboard navigable
+
+HOMEPAGE CONTENT REQUIREMENTS (Citrus-style trust architecture)
+Above the fold:
+- Headline: “High-Ticket Sales Jobs in Dream Destinations”
+- Subhead: “Specialist recruitment for Australians, Kiwis & Brits ready to trade the 9–5 for luxury resort careers in Bali, Vietnam & Thailand — or remote roles anywhere online.”
+- Two CTAs: “Browse Jobs” and “Submit CV (2 minutes)”
+Immediately below: TRUST BAR with 4 items:
+- Verified employers
+- Transparent earnings ranges
+- Relocation/remote setup guidance
+- Fast feedback timeline
+Next sections (in order):
+1) “How it works” (4 steps): Apply → Screen → Interview → Offer/Onboard
+2) Destination grid (Bali/Vietnam/Thailand/Remote)
+3) Featured jobs carousel/grid (SSR-friendly, no heavy JS)
+4) Proof stats band (placements, partners, avg time-to-offer) – use placeholders but typed
+5) Testimonials (candidate + employer)
+6) “Why trust us” section (team, screening standards, no candidate fees)
+7) Guides teaser (3 latest posts)
+8) Final CTA block with reassurance text
+
+JOBS UX REQUIREMENTS
+/jobs listing:
+- Filters (client-side OK): destination, job type (resort/remote), seniority, industry
+- Search by title keyword
+- Pagination (or “load more”) without indexing parameter pages
+/job detail:
+- Strong template with these sections:
+  - role overview (location, earnings range, type, start date)
+  - “Why this role” bullets
+  - responsibilities
+  - requirements
+  - compensation breakdown (simple)
+  - “What happens after you apply” mini timeline
+  - verified employer block (what “verified” means)
+  - CTA apply (goes to /apply?job=slug)
+- Add “related jobs” (same destination/type)
+- Add share buttons (lightweight)
+
+SEO REQUIREMENTS (NON-NEGOTIABLE)
+- Use generateMetadata() for each route:
+  - unique title, description
+  - canonical URL
+  - OpenGraph + Twitter
+- Add structured data:
+  - Organization schema sitewide (name, logo, url, sameAs placeholders)
+  - JobPosting JSON-LD on each job page
+- Create sitemap.xml dynamically (include jobs + guides + geo pages + destinations)
+- robots.txt: allow main site; disallow internal search parameter URLs if any
+- Avoid indexing duplicates:
+  - Noindex pages like /jobs?search= (if used) OR implement search without query indexing
+- Internal linking:
+  - From destination pages → relevant jobs
+  - From jobs → destination guide
+  - From guides → jobs and apply page
+- Performance:
+  - Ensure LCP is good: optimize hero image, avoid heavy scripts
+
+ANALYTICS (LIGHT SETUP)
+Add a simple analytics wrapper with event helpers (no vendor lock-in):
+Track events:
+- job_view
+- apply_click
+- cv_submit
+- employer_lead_submit
+
+FORMS
+- /apply: candidate form fields: name, email, phone (optional), country (AU/NZ/UK/Other), destination preference, remote vs on-site, years in sales, LinkedIn URL, CV upload (use a placeholder upload handler), consent checkbox.
+- /hire: employer lead fields: company, contact, role need, location, hiring timeline, notes.
+Implement basic validation (zod preferred).
+Backend can be stubbed with API routes (route handlers) that log to server + return success.
+
+CONTENT FILES
+Provide example content files:
+- 6 example jobs JSON (2 Bali, 2 Thailand, 1 Vietnam, 1 Remote)
+- 6 testimonials JSON (mix of candidate and employer)
+- 5 guides MDX with SEO-friendly titles and headings
+Use realistic but clearly placeholder company names (no impersonation of real brands).
+
+DELIVERABLES
+- Complete Next.js project structure
+- All routes implemented
+- Reusable components: Layout, Hero, TrustBar, StatsBand, TestimonialGrid, JobCard, JobFilters, DestinationCard, CTASection
+- Types for job/testimonial/guide
+- JSON-LD helpers
+- sitemap and robots implemented
+- README with:
+  - how to run
+  - how to add jobs/guides
+  - SEO checklist
+  - deployment notes (Vercel)
+
+QUALITY BAR
+- Production-grade patterns (no spaghetti)
+- Minimal dependencies
+- Clean, consistent naming
+- Mobile-first responsive
+- Accessible
+- Fast
+
+Now generate:
+1) A file/folder tree for the project
+2) The key TypeScript types
+3) Core pages with functional components
+4) Content loading utilities
+5) JSON-LD helpers
+6) sitemap + robots implementation
+7) Tailwind config (if used) and base styles
+8) Example content files
+9) README

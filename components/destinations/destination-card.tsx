@@ -1,0 +1,53 @@
+import Link from 'next/link';
+import Image from 'next/image';
+import { Destination } from '@/types';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
+
+interface DestinationCardProps {
+  destination: Destination;
+}
+
+export function DestinationCard({ destination }: DestinationCardProps) {
+  return (
+    <div className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
+      <div className="aspect-[4/3] w-full relative overflow-hidden bg-slate-100">
+        <Image
+          src={destination.image}
+          alt={destination.name}
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 to-transparent" />
+        <div className="absolute bottom-4 left-4 text-white">
+          <h3 className="text-xl font-bold tracking-tight">{destination.name}</h3>
+        </div>
+      </div>
+
+      <div className="p-6 space-y-4">
+        <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">
+          {destination.description}
+        </p>
+
+        <div className="grid grid-cols-2 gap-4 text-sm border-t border-slate-100 pt-4">
+          <div>
+            <span className="block text-xs font-semibold text-slate-500 uppercase">Avg Earnings</span>
+            <span className="font-medium text-navy-900">{destination.stats.averageEarnings}</span>
+          </div>
+          <div>
+            <span className="block text-xs font-semibold text-slate-500 uppercase">Cost of Living</span>
+            <span className="font-medium text-navy-900">{destination.stats.costOfLiving}</span>
+          </div>
+        </div>
+
+        <div className="pt-2">
+          <Link href={`/destinations/${destination.slug}`}>
+            <Button variant="ghost" className="w-full justify-between text-primary-600 hover:text-primary-700 hover:bg-primary-50 group-hover:underline">
+              Explore Roles <ArrowRight className="h-4 w-4 ml-2" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}

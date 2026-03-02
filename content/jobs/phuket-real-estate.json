@@ -1,0 +1,36 @@
+{
+  "id": "job-005",
+  "slug": "luxury-real-estate-phuket",
+  "title": "Luxury Property Sales Manager",
+  "destination": "thailand",
+  "type": "full-time",
+  "location": "Phuket, Thailand",
+  "salary": {
+    "min": 80000,
+    "max": 200000,
+    "currency": "USD",
+    "period": "year"
+  },
+  "description": "Sell multi-million dollar villas on the stunning island of Phuket. We represent the most exclusive developments on the island and cater to UHNW clients from around the globe.",
+  "requirements": [
+    "Proven success in luxury sales (real estate, cars, yachts)",
+    "Impeccable presentation and professionalism",
+    "Ability to build rapport quickly with wealthy individuals",
+    "Driver's license required"
+  ],
+  "responsibilities": [
+    "Host VIP clients on property tours",
+    "Present investment opportunities and lifestyle benefits",
+    "Manage the sales pipeline from inquiry to closing",
+    "Collaborate with marketing team on campaigns"
+  ],
+  "postedDate": "2024-05-18",
+  "employer": {
+    "name": "Andaman Elite Properties",
+    "logo": "/images/employers/andaman.png",
+    "verified": true,
+    "website": "https://example.com"
+  },
+  "industry": "Real Estate",
+  "seniority": "Senior"
+}

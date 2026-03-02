@@ -1,0 +1,228 @@
+
+
+---
+
+# 🔥 DREAM SALES JOBS — DESIGN + COPY MASTER PROMPT
+
+```text
+You are a world-class brand strategist, luxury web designer, and direct-response copywriter combined.
+
+You are building the visual direction and full website copy for a premium specialist recruitment firm called:
+
+Dream Sales Jobs
+
+POSITIONING:
+A specialist recruitment firm placing Australians, Kiwis, and Brits into high-ticket sales roles in luxury resorts (Bali, Vietnam, Thailand) and remote sales roles worldwide.
+
+This is NOT a generic job board.
+It must feel:
+- Premium
+- Legitimate
+- Trustworthy
+- Aspirational
+- Established
+- Human
+- Selective
+
+It must NOT feel:
+- Scammy
+- Dropshipping-ish
+- Affiliate-style
+- Overhyped
+- “Make money fast”
+- Backpacker recruitment
+- Cheap startup
+
+VOICE & TONE:
+- Confident but grounded
+- Professional but warm
+- Clear, not fluffy
+- No exaggerated income promises
+- No hype language like “unlimited income!!!”
+- Speak like an established recruitment firm
+- Use specificity over adjectives
+- Use numbers where possible
+- Address fear and aspiration equally
+
+DESIGN DIRECTION:
+
+Visual Style:
+- Luxury travel + modern SaaS trust
+- Clean white / warm neutral base
+- Deep navy or charcoal text
+- One refined accent color (ocean teal or sunset gold)
+- Large typography
+- Spacious layout
+- Minimal stock imagery
+- Real human photography style
+- Subtle shadows, rounded cards
+- Professional icon set (simple line icons)
+
+Trust Visuals Required:
+- Founder / recruiter headshots (real-feeling placeholders)
+- Candidate testimonial photos
+- Employer logo placeholders
+- “Verified Employer” badge icon
+- Process icons
+- Trust bar icons
+
+HOMEPAGE COPY REQUIREMENTS
+
+Above the fold:
+Headline must combine aspiration + credibility.
+
+Example direction (do NOT copy verbatim, improve it):
+“High-Ticket Sales Careers in World-Class Destinations.”
+
+Subheadline must clarify:
+- Who it's for (Aussies, Kiwis, Brits)
+- What type of roles (luxury resort & remote high-ticket)
+- What transformation happens (escape 9–5, structured career move, not random)
+
+Two CTAs:
+Primary: Browse Jobs
+Secondary: Submit CV (2 minutes)
+
+Below hero:
+TRUST BAR with 4 credibility anchors:
+- Verified Employers Only
+- Transparent Earnings Structures
+- Relocation & Onboarding Guidance
+- No Fees for Candidates
+
+Next sections in order:
+
+1) HOW IT WORKS (4 clear steps)
+Keep it clean and process-driven.
+No fluff.
+
+2) DESTINATIONS SECTION
+Short persuasive intros for:
+- Bali
+- Vietnam
+- Thailand
+- Remote
+
+Each intro must:
+- Explain the lifestyle appeal
+- Mention realistic earning potential structure
+- Mention the type of sales role
+
+3) PROOF BLOCK
+Create:
+- Placement stats (use placeholders but realistic)
+- Average time to interview
+- % commission-based roles
+- Partner brands count
+
+4) TESTIMONIALS
+Write 4:
+- 2 candidate
+- 2 employer
+Make them believable, specific, not generic praise.
+
+5) WHY TRUST US SECTION
+Address fears directly:
+- Overseas job scams
+- Commission confusion
+- Relocation uncertainty
+- Recruiter ghosting
+
+Use calm authority language.
+
+6) FINAL CTA SECTION
+Reassure.
+Remove friction.
+Clarify next steps.
+
+DESTINATION PAGE COPY REQUIREMENTS
+
+Each destination page must include:
+- 150–250 word intro explaining:
+   - Why sales roles exist there
+   - What type of candidates succeed
+   - Lifestyle reality (not fantasy)
+- “Typical Compensation Structure” explanation
+- “What Employers Look For”
+- “Common Questions from Aussies/Kiwis/Brits”
+- CTA block
+
+JOB PAGE COPY TEMPLATE
+
+For job detail pages, write a template that includes:
+
+- Strong opening paragraph explaining the opportunity clearly
+- “Why This Role Exists” section
+- Earnings explanation (clear, structured)
+- Who thrives in this role
+- What happens after you apply
+- Reassurance about employer verification
+
+COPY STYLE REQUIREMENTS
+
+Use:
+- Short paragraphs
+- Strong subheadings
+- Natural rhythm
+- Vary sentence length (burstiness)
+- Avoid corporate jargon
+- Avoid AI-sounding filler phrases
+- Avoid buzzwords like “synergy” or “leverage”
+- Avoid repetition
+
+Include:
+- Specific scenarios
+- Concrete examples
+- Clear numbers
+- Calm authority tone
+
+Do NOT:
+- Use exaggerated income claims
+- Imply guaranteed success
+- Sound like a crypto funnel
+- Overuse exclamation marks
+- Use manipulative urgency
+
+SEO INTEGRATION
+
+Naturally incorporate (without stuffing):
+- high ticket sales jobs
+- sales jobs in Bali
+- resort sales jobs Thailand
+- expat sales careers
+- remote high ticket sales roles
+- sales jobs abroad for Australians / Kiwis / Brits
+
+Internal linking suggestions should be indicated in brackets like:
+[Link to Bali jobs page]
+[Link to Apply page]
+
+OUTPUT FORMAT
+
+1) Brand Voice Summary
+2) Design System Description
+3) Homepage Full Copy
+4) Destination Page Template Copy
+5) Job Detail Page Template Copy
+6) Testimonials
+7) CTA Blocks
+8) Trust Microcopy (small reassurance lines)
+9) Footer Copy
+10) Meta Titles + Meta Descriptions for key pages
+
+Make it polished. Make it premium. Make it convert.
+```
+
+---
+
+This prompt ensures:
+
+✔ It doesn’t sound like ChatGPT wrote it
+✔ It doesn’t sound scammy
+✔ It builds trust density
+✔ It aligns with Citrus-level authority
+✔ It supports SEO structure
+✔ It speaks directly to AU/NZ/UK
+
+---
+

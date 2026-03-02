@@ -1,0 +1,227 @@
+import { getAllJobs, getJobBySlug } from '@/lib/api';
+import { notFound } from 'next/navigation';
+import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
+import { Button } from '@/components/ui/button';
+import { MapPin, DollarSign, Briefcase, Clock, ArrowLeft, CheckCircle, Share2 } from 'lucide-react';
+import Link from 'next/link';
+import { formatCurrency } from '@/lib/utils';
+import { Metadata } from 'next';
+import { Job } from '@/types';
+
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const job = getJobBySlug(params.slug);
+
+  if (!job) {
+    return {
+      title: 'Job Not Found',
+    };
+  }
+
+  return {
+    title: `${job.title} in ${job.location} | Dream Sales Jobs`,
+    description: `Apply for ${job.title} at ${job.employer.name}. Earn ${formatCurrency(job.salary.min)} - ${formatCurrency(job.salary.max)}.`,
+    openGraph: {
+      title: `${job.title} in ${job.location}`,
+      description: `Apply for ${job.title} at ${job.employer.name}.`,
+      type: 'article',
+    },
+  };
+}
+
+export async function generateStaticParams() {
+  const jobs = getAllJobs();
+  return jobs.map((job) => ({
+    slug: job.slug,
+  }));
+}
+
+export default function JobPage({ params }: PageProps) {
+  const job = getJobBySlug(params.slug);
+
+  if (!job) {
+    notFound();
+  }
+
+  // JSON-LD for JobPosting
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    title: job.title,
+    description: job.description,
+    identifier: {
+      '@type': 'PropertyValue',
+      name: job.employer.name,
+      value: job.id,
+    },
+    datePosted: job.postedDate,
+    employmentType: job.type === 'full-time' ? 'FULL_TIME' : 'CONTRACTOR',
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: job.employer.name,
+      sameAs: job.employer.website,
+      logo: job.employer.logo,
+    },
+    jobLocation: {
+      '@type': 'Place',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: job.location,
+        addressCountry: job.destination === 'bali' ? 'ID' : job.destination === 'thailand' ? 'TH' : job.destination === 'vietnam' ? 'VN' : job.destination === 'singapore' ? 'SG' : 'Remote',
+      },
+    },
+    baseSalary: {
+      '@type': 'MonetaryAmount',
+      currency: job.salary.currency,
+      value: {
+        '@type': 'QuantitativeValue',
+        minValue: job.salary.min,
+        maxValue: job.salary.max,
+        unitText: job.salary.period.toUpperCase(),
+      },
+    },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Header />
+      <main className="min-h-screen bg-slate-50 py-12">
+        <div className="container mx-auto px-4 md:px-6">
+          <Link href="/jobs" className="inline-flex items-center text-sm text-slate-500 hover:text-primary-600 mb-6 transition-colors">
+            <ArrowLeft className="h-4 w-4 mr-2" /> Back to Jobs
+          </Link>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-2 space-y-8">
+              <div className="bg-white rounded-xl border border-slate-200 p-8 shadow-sm">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h1 className="text-3xl font-bold text-navy-900 mb-2">{job.title}</h1>
+                    <div className="flex items-center gap-2 text-slate-600">
+                      <span className="font-medium text-lg">{job.employer.name}</span>
+                      {job.employer.verified && (
+                        <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                          Verified
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <Button variant="outline" size="icon" className="text-slate-400 hover:text-primary-600">
+                    <Share2 className="h-5 w-5" />
+                  </Button>
+                </div>
+
+                <div className="flex flex-wrap gap-4 mb-8 border-b border-slate-100 pb-8">
+                  <div className="flex items-center gap-2 text-slate-600 bg-slate-50 px-3 py-2 rounded-md">
+                    <MapPin className="h-5 w-5 text-slate-400" />
+                    <span>{job.location}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-600 bg-slate-50 px-3 py-2 rounded-md">
+                    <DollarSign className="h-5 w-5 text-slate-400" />
+                    <span>{formatCurrency(job.salary.min)} - {formatCurrency(job.salary.max)} / {job.salary.period}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-600 bg-slate-50 px-3 py-2 rounded-md">
+                    <Briefcase className="h-5 w-5 text-slate-400" />
+                    <span className="capitalize">{job.type.replace('-', ' ')}</span>
+                  </div>
+                </div>
+
+                <div className="prose prose-slate max-w-none">
+                  <h3 className="text-xl font-semibold text-navy-900 mb-4">Role Overview</h3>
+                  <p className="text-slate-600 leading-relaxed mb-6">{job.description}</p>
+
+                  <h3 className="text-xl font-semibold text-navy-900 mb-4">Key Responsibilities</h3>
+                  <ul className="space-y-2 mb-6">
+                    {job.responsibilities.map((item, index) => (
+                      <li key={index} className="flex items-start gap-3 text-slate-600">
+                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <h3 className="text-xl font-semibold text-navy-900 mb-4">Requirements</h3>
+                  <ul className="space-y-2 mb-6">
+                    {job.requirements.map((item, index) => (
+                      <li key={index} className="flex items-start gap-3 text-slate-600">
+                        <div className="h-1.5 w-1.5 rounded-full bg-slate-400 flex-shrink-0 mt-2.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* What happens next */}
+              <div className="bg-white rounded-xl border border-slate-200 p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-navy-900 mb-6">What happens after you apply?</h3>
+                <div className="space-y-6">
+                   <div className="flex gap-4">
+                     <div className="flex-shrink-0 h-8 w-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center font-bold">1</div>
+                     <div>
+                       <h4 className="font-medium text-navy-900">Application Review (48h)</h4>
+                       <p className="text-sm text-slate-500">Our team screens your CV for match with the employer's needs.</p>
+                     </div>
+                   </div>
+                   <div className="flex gap-4">
+                     <div className="flex-shrink-0 h-8 w-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center font-bold">2</div>
+                     <div>
+                       <h4 className="font-medium text-navy-900">Discovery Call</h4>
+                       <p className="text-sm text-slate-500">A quick chat to discuss your experience and motivation.</p>
+                     </div>
+                   </div>
+                   <div className="flex gap-4">
+                     <div className="flex-shrink-0 h-8 w-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center font-bold">3</div>
+                     <div>
+                       <h4 className="font-medium text-navy-900">Employer Interview</h4>
+                       <p className="text-sm text-slate-500">Direct interview with the hiring manager.</p>
+                     </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <div className="lg:col-span-1 space-y-6">
+              <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm sticky top-24">
+                <h3 className="text-lg font-semibold text-navy-900 mb-4">Interested?</h3>
+                <Link href={`/apply?job=${job.slug}`} className="block w-full">
+                  <Button size="lg" className="w-full bg-secondary-500 hover:bg-secondary-600 text-white font-bold shadow-lg shadow-secondary-500/20">
+                    Apply Now
+                  </Button>
+                </Link>
+                <p className="text-xs text-center text-slate-400 mt-4">
+                  By applying, you agree to our Terms & Privacy Policy.
+                </p>
+                
+                <div className="mt-8 pt-6 border-t border-slate-100">
+                  <h4 className="text-sm font-semibold text-navy-900 mb-2">About the Employer</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed mb-4">
+                    {job.employer.description || `${job.employer.name} is a verified partner of Dream Sales Jobs. They have a track record of success and provide excellent relocation support.`}
+                  </p>
+                  {job.employer.website && (
+                    <a href={job.employer.website} target="_blank" rel="noopener noreferrer" className="text-sm text-primary-600 hover:underline">
+                      Visit Website
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
