@@ -6,6 +6,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://dreamsalesjobs.com'),
   title: "Dream Sales Jobs",
   description: "High-ticket sales roles in Bali, Vietnam, Thailand, and remote.",
 };
