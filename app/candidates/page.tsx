@@ -45,7 +45,7 @@ export default function CandidatesPage() {
               Take Your Sales Career <span className="text-secondary-400">Global</span>
             </h1>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-10">
-              Stop dreaming about a better lifestyle. We connect top sales talent with high-growth companies in Southeast Asia's most desirable locations.
+              Stop dreaming about a better lifestyle. We connect top sales talent with high-growth companies in Southeast Asia&apos;s most desirable locations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/jobs">
@@ -75,7 +75,7 @@ export default function CandidatesPage() {
                 Why Sales Pros Choose Us
               </h2>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                We're not just a job board. We're your partner in making a life-changing career move.
+                We&apos;re not just a job board. We&apos;re your partner in making a life-changing career move.
               </p>
             </div>
 
@@ -113,7 +113,7 @@ export default function CandidatesPage() {
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-navy-900 text-white flex items-center justify-center font-bold">2</div>
                     <div>
                       <h3 className="text-xl font-semibold text-navy-900 mb-2">Initial Screening</h3>
-                      <p className="text-slate-600">We'll chat to understand your experience, goals, and ideal destination. No automated rejections.</p>
+                      <p className="text-slate-600">We&apos;ll chat to understand your experience, goals, and ideal destination. No automated rejections.</p>
                     </div>
                   </div>
                   <div className="flex gap-4">
@@ -134,7 +134,7 @@ export default function CandidatesPage() {
               </div>
               <div className="bg-slate-100 rounded-2xl p-8 h-full min-h-[400px] flex items-center justify-center">
                  <div className="text-center">
-                    <p className="text-slate-400 italic">"Image placeholder: Candidate looking at a view in Bali/Thailand"</p>
+                    <p className="text-slate-400 italic">&quot;Image placeholder: Candidate looking at a view in Bali/Thailand&quot;</p>
                  </div>
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function CandidatesPage() {
               Ready to Upgrade Your Lifestyle?
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-10">
-              Don't wait for "someday". The best sales roles in Southeast Asia are filling up fast.
+              Don&apos;t wait for &quot;someday&quot;. The best sales roles in Southeast Asia are filling up fast.
             </p>
             <Link href="/jobs">
               <Button size="lg" className="bg-secondary-500 hover:bg-secondary-600 text-white font-bold px-8">

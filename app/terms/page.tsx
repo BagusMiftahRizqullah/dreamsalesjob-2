@@ -37,7 +37,7 @@ export default function TermsPage() {
 
               <h2>4. Content</h2>
               <p>
-                Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material ("Content").
+                Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material (&quot;Content&quot;).
                 You are responsible for the Content that you post to the Service, including its legality, reliability, and appropriateness.
               </p>
 

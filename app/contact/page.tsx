@@ -44,7 +44,7 @@ export default function ContactPage() {
                 Get in Touch
               </h1>
               <p className="mt-4 text-lg text-slate-600">
-                Have questions about relocating or hiring? We're here to help.
+                Have questions about relocating or hiring? We&apos;re here to help.
               </p>
             </div>
 
@@ -106,7 +106,7 @@ export default function ContactPage() {
                     </div>
                     <h3 className="text-xl font-bold text-navy-900 mb-2">Message Sent!</h3>
                     <p className="text-slate-600 mb-6">
-                      Thanks for reaching out. We'll get back to you shortly.
+                      Thanks for reaching out. We&apos;ll get back to you shortly.
                     </p>
                     <Button onClick={() => setIsSubmitted(false)} variant="outline">
                       Send Another Message

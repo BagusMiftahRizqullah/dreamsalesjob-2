@@ -171,7 +171,7 @@ export default function JobPage({ params }: PageProps) {
                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center font-bold">1</div>
                      <div>
                        <h4 className="font-medium text-navy-900">Application Review (48h)</h4>
-                       <p className="text-sm text-slate-500">Our team screens your CV for match with the employer's needs.</p>
+                       <p className="text-sm text-slate-500">Our team screens your CV for match with the employer&apos;s needs.</p>
                      </div>
                    </div>
                    <div className="flex gap-4">

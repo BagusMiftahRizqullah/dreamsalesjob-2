@@ -24,7 +24,7 @@ export default function AboutPage() {
                 We started Dream Sales Jobs with a simple mission: to help talented sales professionals escape the rat race and build a career in paradise.
               </p>
               <p>
-                As former sales leaders who made the move ourselves, we know exactly what it takes to succeed in Southeast Asia. We've navigated the visas, the housing markets, and the job landscape so you don't have to.
+                As former sales leaders who made the move ourselves, we know exactly what it takes to succeed in Southeast Asia. We&apos;ve navigated the visas, the housing markets, and the job landscape so you don&apos;t have to.
               </p>
               
               <h2>Our Promise</h2>

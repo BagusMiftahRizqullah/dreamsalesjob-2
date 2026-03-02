@@ -99,7 +99,7 @@ export default function EmployersPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1 bg-slate-100 rounded-2xl p-8 h-full min-h-[400px] flex items-center justify-center">
                  <div className="text-center">
-                    <p className="text-slate-400 italic">"Image placeholder: Professional office setting in Asia"</p>
+                    <p className="text-slate-400 italic">&quot;Image placeholder: Professional office setting in Asia&quot;</p>
                  </div>
               </div>
               <div className="order-1 lg:order-2">
