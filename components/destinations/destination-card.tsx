@@ -10,7 +10,7 @@ interface DestinationCardProps {
 
 export function DestinationCard({ destination }: DestinationCardProps) {
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
+    <div className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg h-full flex flex-col">
       <div className="aspect-[4/3] w-full relative overflow-hidden bg-slate-100">
         <Image
           src={destination.image}
@@ -24,12 +24,12 @@ export function DestinationCard({ destination }: DestinationCardProps) {
         </div>
       </div>
 
-      <div className="p-6 space-y-4">
+      <div className="p-6 space-y-4 flex flex-col flex-1">
         <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">
           {destination.description}
         </p>
 
-        <div className="grid grid-cols-2 gap-4 text-sm border-t border-slate-100 pt-4">
+        <div className="grid grid-cols-2 gap-4 text-sm border-t border-slate-100 pt-4 mt-auto">
           <div>
             <span className="block text-xs font-semibold text-slate-500 uppercase">Avg Earnings</span>
             <span className="font-medium text-navy-900">{destination.stats.averageEarnings}</span>

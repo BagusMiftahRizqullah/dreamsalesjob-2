@@ -21,7 +21,7 @@ export default function RootLayout({
     '@type': 'Organization',
     name: 'Dream Sales Jobs',
     url: 'https://dreamsalesjobs.com',
-    logo: 'https://dreamsalesjobs.com/logo.png',
+    logo: 'https://dreamsalesjobs.com/images/logo-utama.png',
     sameAs: [
       'https://www.linkedin.com/company/dreamsalesjobs',
       'https://twitter.com/dreamsalesjobs',

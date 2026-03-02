@@ -93,11 +93,12 @@ export function getAllTestimonials(): Testimonial[] {
 // --- Destinations ---
 // Hardcoding destinations for now as they are static data mostly
 export const destinations: Destination[] = [
+ 
   {
     slug: 'bali',
-    name: 'Bali, Indonesia',
+    name: 'Bali',
     description: 'The Island of Gods offers a perfect blend of luxury lifestyle and high-ticket sales opportunities in real estate and hospitality.',
-    image: '/images/destinations/bali.jpg',
+    image: 'https://placehold.co/800x600/0f172a/ffffff?text=Bali',
     stats: {
       averageEarnings: '$80k - $150k',
       costOfLiving: 'Low ($2k/mo)',
@@ -105,49 +106,51 @@ export const destinations: Destination[] = [
     }
   },
   {
-    slug: 'thailand',
-    name: 'Thailand',
-    description: 'From Bangkok skyscrapers to Phuket beaches, Thailand is a hub for expat sales professionals in finance, insurance, and marine industries.',
-    image: '/images/destinations/thailand.jpg',
-    stats: {
-      averageEarnings: '$60k - $120k',
-      costOfLiving: 'Low ($1.5k/mo)',
-      visaType: 'LTR / Non-B'
-    }
-  },
-  {
     slug: 'vietnam',
     name: 'Vietnam',
     description: 'One of the fastest-growing economies in Asia. Huge demand for tech sales and recruitment consultants in Ho Chi Minh City.',
-    image: '/images/destinations/vietnam.jpg',
+    image: 'https://placehold.co/800x600/0f172a/ffffff?text=Vietnam',
     stats: {
       averageEarnings: '$50k - $100k',
       costOfLiving: 'Very Low ($1.2k/mo)',
       visaType: 'Business Visa'
     }
   },
-  {
-    slug: 'singapore',
-    name: 'Singapore',
-    description: 'The financial hub of Asia. High base salaries, low tax, and access to the biggest enterprise deals in the region.',
-    image: '/images/destinations/singapore.jpg',
+   {
+    slug: 'thailand',
+    name: 'Thailand',
+    description: 'From Bangkok skyscrapers to Phuket beaches, Thailand is a hub for expat sales professionals in finance, insurance, and marine industries.',
+    image: 'https://placehold.co/800x600/0f172a/ffffff?text=Thailand',
     stats: {
-      averageEarnings: '$150k - $300k',
-      costOfLiving: 'High ($4k/mo)',
-      visaType: 'Employment Pass'
+      averageEarnings: '$60k - $120k',
+      costOfLiving: 'Low ($1.5k/mo)',
+      visaType: 'LTR / Non-B'
     }
   },
+ 
   {
     slug: 'remote',
-    name: 'Remote / Digital Nomad',
-    description: 'Work from anywhere. We partner with US and UK companies looking for remote closers and SDRs in Asian time zones.',
-    image: '/images/destinations/remote.jpg',
+    name: 'Remote',
+    description: 'Work from anywhere with flexible schedules and global clients.',
+    image: 'https://placehold.co/800x600/0f172a/ffffff?text=Remote',
     stats: {
-      averageEarnings: '$100k - $250k+',
-      costOfLiving: 'Variable',
-      visaType: 'Digital Nomad'
+      averageEarnings: '$60k - $120k',
+      costOfLiving: 'Low ($1.5k/mo)',
+      visaType: 'LTR / Non-B'
     }
-  }
+  },
+  
+  // {
+  //   slug: 'indonesia',
+  //   name: 'Indonesia',
+  //   description: 'Beyond Bali, opportunities abound in Jakarta’s bustling tech and business sectors.',
+  //   image: 'https://placehold.co/800x600/0f172a/ffffff?text=Indonesia',
+  //   stats: {
+  //     averageEarnings: '$50k - $100k',
+  //     costOfLiving: 'Low ($1.2k/mo)',
+  //     visaType: 'KITAS'
+  //   }
+  // }
 ];
 
 export function getDestinationBySlug(slug: string): Destination | undefined {

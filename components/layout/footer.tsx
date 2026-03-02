@@ -1,4 +1,6 @@
+import { Linkedin, Twitter, Facebook, Instagram } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Footer() {
   return (
@@ -7,10 +9,32 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-white tracking-tight">Dream Sales Jobs</h3>
+            <Link href="/" className="block">
+              <Image 
+                src="/images/logo-utama.png" 
+                alt="Dream Sales Jobs" 
+                width={180} 
+                height={40} 
+                className="h-10 w-auto object-contain brightness-0 invert"
+              />
+            </Link>
             <p className="text-sm leading-relaxed max-w-xs">
               Specialist recruitment for Australians, Kiwis & Brits ready to trade the 9–5 for luxury resort careers in Bali, Vietnam & Thailand.
             </p>
+            <div className="flex gap-4 pt-2">
+              <Link href="https://twitter.com/dreamsalesjobs" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-primary-500 transition-colors" aria-label="Twitter">
+                <Twitter className="h-5 w-5" />
+              </Link>
+              <Link href="https://www.linkedin.com/company/dreamsalesjobs" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-primary-500 transition-colors" aria-label="LinkedIn">
+                <Linkedin className="h-5 w-5" />
+              </Link>
+              <Link href="#" className="text-slate-400 hover:text-primary-500 transition-colors" aria-label="Facebook">
+                <Facebook className="h-5 w-5" />
+              </Link>
+              <Link href="#" className="text-slate-400 hover:text-primary-500 transition-colors" aria-label="Instagram">
+                <Instagram className="h-5 w-5" />
+              </Link>
+            </div>
           </div>
 
           {/* Quick Links */}
