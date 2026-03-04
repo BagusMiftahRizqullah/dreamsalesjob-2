@@ -53,7 +53,7 @@ export default function DestinationPage({ params }: PageProps) {
         {/* Hero Section */}
         <div className="relative h-[400px] w-full">
            <Image
-             src={`https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&q=80&w=1920`} // Placeholder, would ideally use destination.image
+             src={destination.image}
              alt={destination.name}
              fill
              className="object-cover brightness-50"
