@@ -46,9 +46,7 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" className="hidden lg:flex">
-            Log In
-          </Button>
+
           <Link href="/apply">
             <Button className="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold shadow-lg shadow-secondary-500/20">
               Submit CV

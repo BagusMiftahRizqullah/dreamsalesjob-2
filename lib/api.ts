@@ -140,17 +140,17 @@ export const destinations: Destination[] = [
     }
   },
   
-  // {
-  //   slug: 'indonesia',
-  //   name: 'Indonesia',
-  //   description: 'Beyond Bali, opportunities abound in Jakarta’s bustling tech and business sectors.',
-  //   image: 'https://placehold.co/800x600/0f172a/ffffff?text=Indonesia',
-  //   stats: {
-  //     averageEarnings: '$50k - $100k',
-  //     costOfLiving: 'Low ($1.2k/mo)',
-  //     visaType: 'KITAS'
-  //   }
-  // }
+  {
+    slug: 'indonesia',
+    name: 'Indonesia',
+    description: 'Beyond Bali, opportunities abound in Jakarta’s bustling tech and business sectors.',
+    image: 'https://placehold.co/800x600/0f172a/ffffff?text=Indonesia',
+    stats: {
+      averageEarnings: '$50k - $100k',
+      costOfLiving: 'Low ($1.2k/mo)',
+      visaType: 'KITAS'
+    }
+  }
 ];
 
 export function getDestinationBySlug(slug: string): Destination | undefined {
