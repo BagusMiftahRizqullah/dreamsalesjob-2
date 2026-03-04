@@ -8,7 +8,7 @@ export function StatsBand() {
 
   return (
     <section className="bg-navy-900 py-16 text-white">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-navy-800/50">
           {stats.map((stat, index) => (
             <div key={index} className="p-4">

@@ -26,7 +26,7 @@ export function TrustBar() {
 
   return (
     <section className="bg-white border-b border-slate-100 py-12">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {items.map((item, index) => (
             <div key={index} className="flex items-start gap-4 p-4 rounded-lg hover:bg-slate-50 transition-colors">

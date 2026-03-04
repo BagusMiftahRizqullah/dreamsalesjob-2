@@ -6,11 +6,11 @@ export function CTASection() {
   return (
     <section className="bg-navy-900 py-20 lg:py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-      <div className="container mx-auto px-4 md:px-6 relative text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl mb-6">
+      <div className="container relative text-center">
+        <h2 className="text-white mb-6">
           Ready to Upgrade Your Lifestyle?
         </h2>
-        <p className="mx-auto max-w-2xl text-lg text-slate-300 mb-10 leading-relaxed">
+        <p className="mx-auto max-w-2xl text-slate-300 mb-10 leading-relaxed">
           Stop dreaming about it. Start your application today and be on a plane within 30 days. Our employers are hiring now.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

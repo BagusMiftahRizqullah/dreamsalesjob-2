@@ -37,7 +37,7 @@ export interface Testimonial {
   type: 'candidate' | 'employer';
 }
 
-export interface Guide {
+export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;

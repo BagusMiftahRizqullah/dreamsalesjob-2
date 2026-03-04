@@ -3,6 +3,7 @@ import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { CheckCircle2, UserCheck, TrendingUp, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -97,10 +98,13 @@ export default function EmployersPage() {
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="order-2 lg:order-1 bg-slate-100 rounded-2xl p-8 h-full min-h-[400px] flex items-center justify-center">
-                 <div className="text-center">
-                    <p className="text-slate-400 italic">&quot;Image placeholder: Professional office setting in Asia&quot;</p>
-                 </div>
+              <div className="order-2 lg:order-1 relative rounded-2xl overflow-hidden h-full min-h-[400px] shadow-xl">
+                 <Image
+                   src="/images/SimpleHiring.png"
+                   alt="Simple Hiring Process"
+                   fill
+                   className="object-cover"
+                 />
               </div>
               <div className="order-1 lg:order-2">
                 <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-6">

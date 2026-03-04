@@ -5,7 +5,7 @@ import Image from 'next/image';
 export function Footer() {
   return (
     <footer className="bg-navy-900 text-slate-300 py-12 border-t border-slate-800">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
@@ -15,7 +15,7 @@ export function Footer() {
                 alt="Dream Sales Jobs" 
                 width={180} 
                 height={40} 
-                className="h-10 w-auto object-contain brightness-0 invert"
+                className="h-10 w-auto object-contain bg-white rounded-md p-1"
               />
             </Link>
             <p className="text-sm leading-relaxed max-w-xs">
@@ -43,7 +43,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/jobs" className="hover:text-primary-500 transition-colors">Browse Jobs</Link></li>
               <li><Link href="/destinations" className="hover:text-primary-500 transition-colors">Destinations</Link></li>
-              <li><Link href="/guides" className="hover:text-primary-500 transition-colors">Career Guides</Link></li>
+              <li><Link href="/blog" className="hover:text-primary-500 transition-colors">Career Blog</Link></li>
               <li><Link href="/about" className="hover:text-primary-500 transition-colors">About Us</Link></li>
             </ul>
           </div>

@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { Job, Guide, Testimonial, Destination } from '@/types';
+import { Job, BlogPost, Testimonial, Destination } from '@/types';
 
 const jobsDirectory = path.join(process.cwd(), 'content/jobs');
-const guidesDirectory = path.join(process.cwd(), 'content/guides');
+const postsDirectory = path.join(process.cwd(), 'content/blog');
 const testimonialsPath = path.join(process.cwd(), 'content/testimonials.json');
 
 // --- Jobs ---
@@ -40,16 +40,16 @@ export function getJobsByDestination(destination: string): Job[] {
   return jobs.filter((job) => job.destination === destination);
 }
 
-// --- Guides ---
+// --- Blog ---
 
-export function getAllGuides(): Guide[] {
-  if (!fs.existsSync(guidesDirectory)) {
+export function getAllPosts(): BlogPost[] {
+  if (!fs.existsSync(postsDirectory)) {
     return [];
   }
-  const fileNames = fs.readdirSync(guidesDirectory).filter(file => file.endsWith('.mdx'));
-  const allGuidesData = fileNames.map((fileName) => {
+  const fileNames = fs.readdirSync(postsDirectory).filter(file => file.endsWith('.mdx'));
+  const allPostsData = fileNames.map((fileName) => {
     const slug = fileName.replace(/\.mdx$/, '');
-    const fullPath = path.join(guidesDirectory, fileName);
+    const fullPath = path.join(postsDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
 
@@ -62,10 +62,10 @@ export function getAllGuides(): Guide[] {
       content: content,
       image: data.image,
       category: data.category,
-    } as Guide;
+    } as BlogPost;
   });
 
-  return allGuidesData.sort((a, b) => {
+  return allPostsData.sort((a, b) => {
     if (a.date < b.date) {
       return 1;
     } else {
@@ -74,9 +74,9 @@ export function getAllGuides(): Guide[] {
   });
 }
 
-export function getGuideBySlug(slug: string): Guide | undefined {
-  const guides = getAllGuides();
-  return guides.find((guide) => guide.slug === slug);
+export function getPostBySlug(slug: string): BlogPost | undefined {
+  const posts = getAllPosts();
+  return posts.find((post) => post.slug === slug);
 }
 
 // --- Testimonials ---
@@ -98,7 +98,7 @@ export const destinations: Destination[] = [
     slug: 'bali',
     name: 'Bali',
     description: 'The Island of Gods offers a perfect blend of luxury lifestyle and high-ticket sales opportunities in real estate and hospitality.',
-    image: 'https://placehold.co/800x600/0f172a/ffffff?text=Bali',
+    image: '/images/place/bali.png',
     stats: {
       averageEarnings: '$80k - $150k',
       costOfLiving: 'Low ($2k/mo)',
@@ -109,7 +109,7 @@ export const destinations: Destination[] = [
     slug: 'vietnam',
     name: 'Vietnam',
     description: 'One of the fastest-growing economies in Asia. Huge demand for tech sales and recruitment consultants in Ho Chi Minh City.',
-    image: 'https://placehold.co/800x600/0f172a/ffffff?text=Vietnam',
+    image: '/images/place/vietnam.png',
     stats: {
       averageEarnings: '$50k - $100k',
       costOfLiving: 'Very Low ($1.2k/mo)',
@@ -120,7 +120,7 @@ export const destinations: Destination[] = [
     slug: 'thailand',
     name: 'Thailand',
     description: 'From Bangkok skyscrapers to Phuket beaches, Thailand is a hub for expat sales professionals in finance, insurance, and marine industries.',
-    image: 'https://placehold.co/800x600/0f172a/ffffff?text=Thailand',
+    image: '/images/place/thailand.png',
     stats: {
       averageEarnings: '$60k - $120k',
       costOfLiving: 'Low ($1.5k/mo)',
@@ -132,7 +132,7 @@ export const destinations: Destination[] = [
     slug: 'remote',
     name: 'Remote',
     description: 'Work from anywhere with flexible schedules and global clients.',
-    image: 'https://placehold.co/800x600/0f172a/ffffff?text=Remote',
+    image: '/images/place/remote.png',
     stats: {
       averageEarnings: '$60k - $120k',
       costOfLiving: 'Low ($1.5k/mo)',

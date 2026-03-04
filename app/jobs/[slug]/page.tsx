@@ -1,4 +1,4 @@
-import { getAllJobs, getJobBySlug } from '@/lib/api';
+import { getAllJobs, getJobBySlug, getDestinationBySlug } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { formatCurrency } from '@/lib/utils';
 import { Metadata } from 'next';
 import { Job } from '@/types';
+import Image from 'next/image';
 
 interface PageProps {
   params: {
@@ -48,6 +49,9 @@ export default function JobPage({ params }: PageProps) {
   if (!job) {
     notFound();
   }
+
+  const destination = getDestinationBySlug(job.destination);
+  const bgImage = destination?.image || '/images/place/bali.png';
 
   // JSON-LD for JobPosting
   const jsonLd = {
@@ -95,14 +99,44 @@ export default function JobPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Header />
-      <main className="min-h-screen bg-slate-50 py-12">
-        <div className="container mx-auto px-4 md:px-6">
-          <Link href="/jobs" className="inline-flex items-center text-sm text-slate-500 hover:text-primary-600 mb-6 transition-colors">
-            <ArrowLeft className="h-4 w-4 mr-2" /> Back to Jobs
-          </Link>
+      <div className="relative h-[300px] md:h-[400px] w-full overflow-hidden">
+        <Image
+          src={bgImage}
+          alt={job.location}
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-navy-900/70" />
+        <div className="container relative h-full flex flex-col justify-center">
+          <div className="max-w-4xl">
+            <Link href="/jobs" className="inline-flex items-center text-sm text-white/80 hover:text-white mb-6 transition-colors">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Jobs
+            </Link>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">{job.title}</h1>
+            <div className="flex flex-wrap gap-4 text-white/90">
+              <div className="flex items-center">
+                <MapPin className="mr-2 h-5 w-5 text-secondary-500" />
+                {job.location}
+              </div>
+              <div className="flex items-center">
+                <DollarSign className="mr-2 h-5 w-5 text-secondary-500" />
+                {formatCurrency(job.salary.min)} - {formatCurrency(job.salary.max)} / {job.salary.period}
+              </div>
+              <div className="flex items-center">
+                <Briefcase className="mr-2 h-5 w-5 text-secondary-500" />
+                {job.type}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <main className="min-h-screen bg-slate-50 py-12">
+        <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content */}
+            {/* Left Column: Job Description */}
             <div className="lg:col-span-2 space-y-8">
               <div className="bg-white rounded-xl border border-slate-200 p-8 shadow-sm">
                 <div className="flex items-start justify-between mb-6">

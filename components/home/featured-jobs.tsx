@@ -11,13 +11,13 @@ interface FeaturedJobsProps {
 export function FeaturedJobs({ jobs }: FeaturedJobsProps) {
   return (
     <section className="bg-slate-50 py-20 lg:py-28">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between mb-12">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-navy-900 sm:text-4xl">
+            <h2 className="text-navy-900">
               Featured Opportunities
             </h2>
-            <p className="mt-4 text-lg text-slate-600">
+            <p className="mt-4 text-slate-600">
               Hand-picked roles with verified employers and competitive OTEs.
             </p>
           </div>

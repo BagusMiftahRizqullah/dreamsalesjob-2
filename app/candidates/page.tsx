@@ -3,6 +3,7 @@ import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { CheckCircle2, DollarSign, Globe, Briefcase } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -53,9 +54,9 @@ export default function CandidatesPage() {
                   Browse Open Roles
                 </Button>
               </Link>
-              <Link href="/guides">
+              <Link href="/blog">
                 <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10 w-full sm:w-auto">
-                  Read Our Guides
+                  Read Our Blog
                 </Button>
               </Link>
             </div>
@@ -132,10 +133,13 @@ export default function CandidatesPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-100 rounded-2xl p-8 h-full min-h-[400px] flex items-center justify-center">
-                 <div className="text-center">
-                    <p className="text-slate-400 italic">&quot;Image placeholder: Candidate looking at a view in Bali/Thailand&quot;</p>
-                 </div>
+              <div className="bg-slate-100 rounded-2xl p-8 h-full min-h-[400px] flex items-center justify-center relative overflow-hidden">
+                 <Image
+                   src="/images/howitworks.png"
+                   alt="How it works"
+                   fill
+                   className="object-contain p-8"
+                 />
               </div>
             </div>
           </div>

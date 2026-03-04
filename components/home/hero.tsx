@@ -23,10 +23,10 @@ export function Hero({
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
       
-      <div className="container relative mx-auto px-4 md:px-6">
+      <div className="container relative">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           <div className="flex-1 space-y-8 text-center lg:text-left">
-            <h1 className="text-4xl font-extrabold tracking-tight text-navy-900 sm:text-5xl lg:text-6xl xl:text-7xl">
+            <h1 className="text-navy-900">
               {title}
             </h1>
             <p className="mx-auto lg:mx-0 max-w-2xl text-lg text-slate-600 sm:text-xl leading-relaxed">

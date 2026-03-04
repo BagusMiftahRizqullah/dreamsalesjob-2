@@ -1,12 +1,12 @@
 import { MetadataRoute } from 'next';
-import { getAllJobs, getAllDestinations, getAllGuides } from '@/lib/api';
+import { getAllJobs, getAllDestinations, getAllPosts } from '@/lib/api';
 
 const BASE_URL = 'https://dreamsalesjobs.com'; // Replace with actual domain
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const jobs = getAllJobs();
   const destinations = getAllDestinations();
-  const guides = getAllGuides();
+  const posts = getAllPosts();
 
   const staticRoutes = [
     '',
@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/destinations',
     '/about',
     '/contact',
-    '/guides',
+    '/blog',
     '/apply',
     '/hire',
     '/au',
@@ -45,12 +45,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const guideRoutes = guides.map((guide) => ({
-    url: `${BASE_URL}/guides/${guide.slug}`,
-    lastModified: new Date(guide.date),
+  const blogRoutes = posts.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...jobRoutes, ...destinationRoutes, ...guideRoutes];
+  return [...staticRoutes, ...jobRoutes, ...destinationRoutes, ...blogRoutes];
 }
