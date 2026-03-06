@@ -10,7 +10,7 @@ interface DestinationCardProps {
 
 export function DestinationCard({ destination }: DestinationCardProps) {
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg h-full flex flex-col">
+    <Link href={`/destinations/${destination.slug}`} className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg h-full flex flex-col block">
       <div className="aspect-[4/3] w-full relative overflow-hidden bg-slate-100">
         <Image
           src={destination.image}
@@ -41,13 +41,11 @@ export function DestinationCard({ destination }: DestinationCardProps) {
         </div>
 
         <div className="pt-2">
-          <Link href={`/destinations/${destination.slug}`}>
-            <Button variant="ghost" className="w-full justify-between text-primary-600 hover:text-primary-700 hover:bg-primary-50 group-hover:underline">
-              Explore Roles <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
-          </Link>
+          <div className="inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors h-10 px-4 py-2 w-full justify-between text-primary-600 hover:text-primary-700 hover:bg-primary-50 group-hover:underline">
+            Explore Roles <ArrowRight className="h-4 w-4 ml-2" />
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -14,7 +14,7 @@ export function JobsList({ initialJobs }: JobsListProps) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-      <aside className="lg:col-span-1">
+      <aside className="hidden lg:block lg:col-span-1">
         <JobFilters jobs={initialJobs} onFilterChange={setFilteredJobs} />
       </aside>
       <div className="lg:col-span-3 space-y-6">
