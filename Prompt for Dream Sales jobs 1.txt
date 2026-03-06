@@ -54,7 +54,7 @@ Create a clean component library and consistent layout:
 
 HOMEPAGE CONTENT REQUIREMENTS (Citrus-style trust architecture)
 Above the fold:
-- Headline: “High-Ticket Sales Jobs in Dream Destinations”
+- Headline: “High-Ticket Sales Jobs in Bali & Da Nang, Vietnam
 - Subhead: “Specialist recruitment for Australians, Kiwis & Brits ready to trade the 9–5 for luxury resort careers in Bali, Vietnam & Thailand — or remote roles anywhere online.”
 - Two CTAs: “Browse Jobs” and “Submit CV (2 minutes)”
 Immediately below: TRUST BAR with 4 items:

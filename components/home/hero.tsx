@@ -12,14 +12,14 @@ interface HeroProps {
 export function Hero({ 
   title = (
     <>
-      High-Ticket Sales Jobs in <span className="text-primary-600">Dream Destinations</span>
+    High-Ticket Sales Jobs in <span className="text-primary-600">Bali & Da Nang, Vietnam</span>
     </>
   ),
-  subtitle = "Specialist recruitment for Australians, Kiwis & Brits ready to trade the 9–5 for luxury resort careers in Bali, Vietnam & Thailand — or remote roles anywhere online.",
+  subtitle = "Specialist recruitment for Australians, New Zealanders & British ready to trade the 9–5 for luxury resort careers in Bali, Vietnam or remotes sales roles anywhere online.",
   ctaText = "Browse Jobs"
 }: HeroProps) {
   return (
-    <section className="relative overflow-hidden bg-slate-50 pt-16 pb-20 lg:pt-24 lg:pb-28">
+    <section className="relative overflow-hidden bg-slate-50 min-h-[calc(100vh-5rem)] flex items-center py-12 lg:py-0">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
       
@@ -29,9 +29,9 @@ export function Hero({
             <h1 className="text-navy-900">
               {title}
             </h1>
-            <p className="mx-auto lg:mx-0 max-w-2xl text-lg text-slate-600 sm:text-xl leading-relaxed">
+            <h2 className="mx-auto lg:mx-0 max-w-2xl text-lg text-slate-600 sm:text-xl leading-relaxed">
               {subtitle}
-            </p>
+            </h2>
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <Link href="/jobs" className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto bg-navy-900 hover:bg-navy-800 text-white font-bold text-lg h-14 px-8 shadow-xl shadow-navy-900/10">

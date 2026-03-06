@@ -10,7 +10,7 @@ interface FeaturedJobsProps {
 
 export function FeaturedJobs({ jobs }: FeaturedJobsProps) {
   return (
-    <section className="bg-slate-50 py-20 lg:py-28">
+    <section className="bg-slate-50 py-8 lg:py-8">
       <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between mb-12">
           <div>

@@ -2,7 +2,7 @@ export function StatsBand() {
   const stats = [
     { label: 'Candidates Placed', value: '450+' },
     { label: 'Verified Employers', value: '60+' },
-    { label: 'Avg Time to Offer', value: '14 Days' },
+    { label: 'Avg Time to Offer', value: '21 Days' },
     { label: 'Countries Covered', value: '3' },
   ];
 

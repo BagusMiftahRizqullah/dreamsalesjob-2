@@ -27,7 +27,7 @@ export function Header() {
             alt="Dream Sales Jobs" 
             width={220} 
             height={55} 
-            className="h-14 w-auto object-contain"
+            className="h-20 w-auto object-contain"
             priority
           />
         </Link>

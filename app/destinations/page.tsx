@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function DestinationsPage() {
-  const destinations = getAllDestinations();
+  const destinations = getAllDestinations().filter((d) => d.slug !== 'indonesia');
 
   return (
     <>
