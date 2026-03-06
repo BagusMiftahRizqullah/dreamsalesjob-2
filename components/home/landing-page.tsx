@@ -18,7 +18,9 @@ interface LandingPageProps {
 
 export function LandingPage({ heroTitle, heroSubtitle }: LandingPageProps) {
   const jobs = getAllJobs();
-  const destinations = getAllDestinations();
+  const destinations = getAllDestinations()
+    .filter((d) => d.slug !== 'indonesia')
+    .slice(0, 4);
   const testimonials = getAllTestimonials();
 
   return (
