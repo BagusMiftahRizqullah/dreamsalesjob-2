@@ -122,7 +122,7 @@ export default function JobPage({ params }: PageProps) {
               </div>
               <div className="flex items-center">
                 <DollarSign className="mr-2 h-5 w-5 text-secondary-500" />
-                {formatCurrency(job.salary.min)} - {formatCurrency(job.salary.max)} / {job.salary.period}
+                {job.salary.min === 0 && job.salary.max === 0 ? 'High Commission' : `${formatCurrency(job.salary.min)} - ${formatCurrency(job.salary.max)} / ${job.salary.period}`}
               </div>
               <div className="flex items-center">
                 <Briefcase className="mr-2 h-5 w-5 text-secondary-500" />
@@ -163,7 +163,7 @@ export default function JobPage({ params }: PageProps) {
                   </div>
                   <div className="flex items-center gap-2 text-slate-600 bg-slate-50 px-3 py-2 rounded-md">
                     <DollarSign className="h-5 w-5 text-slate-400" />
-                    <span>{formatCurrency(job.salary.min)} - {formatCurrency(job.salary.max)} / {job.salary.period}</span>
+                    <span>{job.salary.min === 0 && job.salary.max === 0 ? 'High Commission' : `${formatCurrency(job.salary.min)} - ${formatCurrency(job.salary.max)} / ${job.salary.period}`}</span>
                   </div>
                   <div className="flex items-center gap-2 text-slate-600 bg-slate-50 px-3 py-2 rounded-md">
                     <Briefcase className="h-5 w-5 text-slate-400" />
@@ -171,30 +171,7 @@ export default function JobPage({ params }: PageProps) {
                   </div>
                 </div>
 
-                <div className="prose prose-slate max-w-none">
-                  <h3 className="text-xl font-semibold text-navy-900 mb-4">Role Overview</h3>
-                  <p className="text-slate-600 leading-relaxed mb-6">{job.description}</p>
-
-                  <h3 className="text-xl font-semibold text-navy-900 mb-4">Key Responsibilities</h3>
-                  <ul className="space-y-2 mb-6">
-                    {job.responsibilities.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3 text-slate-600">
-                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <h3 className="text-xl font-semibold text-navy-900 mb-4">Requirements</h3>
-                  <ul className="space-y-2 mb-6">
-                    {job.requirements.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3 text-slate-600">
-                        <div className="h-1.5 w-1.5 rounded-full bg-slate-400 flex-shrink-0 mt-2.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <div className="prose prose-slate max-w-none" dangerouslySetInnerHTML={{ __html: job.description }} />
               </div>
 
               {/* What happens next */}
