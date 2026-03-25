@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://dreamsalesjobs.com'),
-  title: "Dream Sales Jobs",
-  description: "High-ticket sales roles in Bali, Vietnam, Thailand, and remote.",
+  title: "Dream Sales Jobs | Travel the World with High-Paying Sales Careers",
+  description: "Specialist recruitment for Australians, New Zealanders, & British looking to trade the 9-5 for luxury resort careers or remote work worldwide.",
 };
 
 export default function RootLayout({

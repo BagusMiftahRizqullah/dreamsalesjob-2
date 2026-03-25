@@ -12,10 +12,10 @@ interface HeroProps {
 export function Hero({ 
   title = (
     <>
-    High-Ticket Sales Jobs in <span className="text-primary-600">Bali & Da Nang, Vietnam</span>
+    High-Ticket Sales Jobs In <span className="text-primary-600">Bali & Da Nang, Vietnam</span>
     </>
   ),
-  subtitle = "Specialist recruitment for Australians, New Zealanders & British ready to trade the 9–5 for luxury resort careers in Bali, Vietnam or remotes sales roles anywhere online.",
+  subtitle = "Specialist recruitment for Australians, New Zealanders, & British looking to trade the 9-5 for luxury resort careers or remote work worldwide.",
   ctaText = "Browse Jobs"
 }: HeroProps) {
   return (
