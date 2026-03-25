@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getAllJobs, getAllDestinations, getAllPosts } from '@/lib/api';
 
-const BASE_URL = 'https://dreamsalesjobs.com'; // Replace with actual domain
+const BASE_URL = 'https://dreamsalesjob-2.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const jobs = getAllJobs();

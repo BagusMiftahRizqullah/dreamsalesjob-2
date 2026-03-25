@@ -3,10 +3,13 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://dreamsalesjobs.com'),
+  metadataBase: new URL('https://dreamsalesjob-2.vercel.app'),
   title: "Dream Sales Jobs | Travel the World with High-Paying Sales Careers",
   description: "Specialist recruitment for Australians, New Zealanders, & British looking to trade the 9-5 for luxury resort careers or remote work worldwide.",
 };
@@ -20,8 +23,8 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Dream Sales Jobs',
-    url: 'https://dreamsalesjobs.com',
-    logo: 'https://dreamsalesjobs.com/images/logo-utama.png',
+    url: 'https://dreamsalesjob-2.vercel.app',
+    logo: 'https://dreamsalesjob-2.vercel.app/images/logo-utama.png',
     sameAs: [
       'https://www.linkedin.com/company/dreamsalesjobs',
       'https://twitter.com/dreamsalesjobs',

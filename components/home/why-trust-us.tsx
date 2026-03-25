@@ -36,6 +36,7 @@ export function WhyTrustUs() {
                 src="/images/TrustUs.png"
                 alt="Why Trust Dream Sales Jobs"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
              />
           </div>

@@ -6,9 +6,9 @@ export function Analytics() {
       {/* Google Analytics 4 */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script id="google-analytics" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

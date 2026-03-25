@@ -16,6 +16,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
               src={testimonial.image}
               alt={testimonial.name}
               fill
+              sizes="48px"
               className="object-cover"
             />
           </div>

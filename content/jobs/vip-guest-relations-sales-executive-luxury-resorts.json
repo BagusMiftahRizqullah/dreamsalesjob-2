@@ -31,10 +31,10 @@
   "postedDate": "2026-03-06",
   "employer": {
     "name": "Dream Sales Jobs",
-    "logo": "https://dreamsalesjobs.com/wp-content/uploads/2024/11/cropped-logo-utama-1-150x150.png",
+    "logo": "https://dreamsalesjob-2.vercel.app/wp-content/uploads/2024/11/cropped-logo-utama-1-150x150.png",
     "verified": true,
     "description": "Leading recruitment for sales jobs in SE Asia.",
-    "website": "https://dreamsalesjobs.com"
+    "website": "https://dreamsalesjob-2.vercel.app"
   },
   "industry": "Sales",
   "seniority": "Mid-Senior Level"
