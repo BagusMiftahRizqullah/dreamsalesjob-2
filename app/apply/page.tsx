@@ -29,7 +29,7 @@ function ApplyForm() {
   } = useForm<ApplyFormValues>({
     resolver: zodResolver(applySchema),
     defaultValues: {
-      destination: 'bali', // Default to Bali if no job selected
+      destination: 'salesjobsbali', // Default to Bali if no job selected
     },
   });
 
@@ -134,10 +134,10 @@ function ApplyForm() {
                 errors.destination ? 'border-red-500' : 'border-slate-200'
               }`}
             >
-              <option value="bali">Bali, Indonesia</option>
-              <option value="thailand">Thailand</option>
-              <option value="vietnam">Vietnam</option>
-              <option value="remote">Remote</option>
+              <option value="salesjobsbali">Bali, Indonesia</option>
+              <option value="salesjobsthailand">Thailand</option>
+              <option value="salesjobsvietnam">Vietnam</option>
+              <option value="remotesalesjobs">Remote</option>
             </select>
             {errors.destination && (
               <p className="text-sm text-red-500">{errors.destination.message}</p>

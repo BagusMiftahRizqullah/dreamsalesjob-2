@@ -2,7 +2,7 @@ export interface Job {
   id: string;
   slug: string;
   title: string;
-  destination: 'bali' | 'vietnam' | 'thailand' | 'singapore' | 'remote' | 'cambodia' | 'greece' | 'spain' | 'italy' | 'france' | 'united-kingdom' | 'egypt' | 'germany' | 'maldives' | 'india' | 'indonesia';
+  destination: 'salesjobsbali' | 'salesjobsvietnam' | 'salesjobsthailand' | 'singapore' | 'remotesalesjobs' | 'cambodia' | 'greece' | 'spain' | 'italy' | 'france' | 'united-kingdom' | 'egypt' | 'germany' | 'maldives' | 'india' | 'indonesia';
   type: 'full-time' | 'contract';
   location: string;
   salary: {

@@ -77,7 +77,10 @@ export default function JobPage({ params }: PageProps) {
       address: {
         '@type': 'PostalAddress',
         addressLocality: job.location,
-        addressCountry: job.destination === 'bali' ? 'ID' : job.destination === 'thailand' ? 'TH' : job.destination === 'vietnam' ? 'VN' : job.destination === 'singapore' ? 'SG' : 'Remote',
+        addressCountry: job.destination === 'salesjobsbali' ? 'ID' : 
+                        job.destination === 'salesjobsthailand' ? 'TH' : 
+                        job.destination === 'salesjobsvietnam' ? 'VN' : 
+                        job.destination === 'singapore' ? 'SG' : '',
       },
     },
     baseSalary: {

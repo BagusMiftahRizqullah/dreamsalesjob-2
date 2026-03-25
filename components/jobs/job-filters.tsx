@@ -62,10 +62,10 @@ export function JobFilters({ jobs, onFilterChange }: JobFiltersProps) {
           onChange={(e) => setDestination(e.target.value)}
         >
           <option value="all">All Destinations</option>
-          <option value="bali">Bali</option>
-          <option value="thailand">Thailand</option>
-          <option value="vietnam">Vietnam</option>
-          <option value="remote">Remote</option>
+          <option value="salesjobsbali">Bali</option>
+          <option value="salesjobsthailand">Thailand</option>
+          <option value="salesjobsvietnam">Vietnam</option>
+          <option value="remotesalesjobs">Remote</option>
         </select>
       </div>
 

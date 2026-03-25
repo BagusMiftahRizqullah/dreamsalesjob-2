@@ -95,7 +95,7 @@ export function getAllTestimonials(): Testimonial[] {
 export const destinations: Destination[] = [
  
   {
-    slug: 'bali',
+    slug: 'salesjobsbali',
     name: 'Bali',
     description: 'The Island of Gods offers a perfect blend of luxury lifestyle and high-ticket sales opportunities in real estate and hospitality.',
     image: '/images/place/bali.png',
@@ -106,7 +106,7 @@ export const destinations: Destination[] = [
     }
   },
   {
-    slug: 'vietnam',
+    slug: 'salesjobsvietnam',
     name: 'Vietnam',
     description: 'One of the fastest-growing economies in Asia. Huge demand for tech sales and recruitment consultants in Ho Chi Minh City.',
     image: '/images/place/vietnam.png',
@@ -117,7 +117,7 @@ export const destinations: Destination[] = [
     }
   },
    {
-    slug: 'thailand',
+    slug: 'salesjobsthailand',
     name: 'Thailand',
     description: 'From Bangkok skyscrapers to Phuket beaches, Thailand is a hub for expat sales professionals in finance, insurance, and marine industries.',
     image: '/images/place/thailand.png',
@@ -129,7 +129,7 @@ export const destinations: Destination[] = [
   },
  
   {
-    slug: 'remote',
+    slug: 'remotesalesjobs',
     name: 'Remote',
     description: 'Work from anywhere with flexible schedules and global clients.',
     image: '/images/place/remote.png',
