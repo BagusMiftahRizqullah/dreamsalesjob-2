@@ -51,6 +51,7 @@ export function Hero({
                     <Image
                       src={`https://i.pravatar.cc/150?img=${i + 10}`}
                       alt="User"
+                      title="User"
                       fill
                       sizes="32px"
                       className="object-cover"
@@ -67,6 +68,7 @@ export function Hero({
                <Image
                  src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=1974&auto=format&fit=crop"
                  alt="Working remotely in paradise"
+                 title="Working remotely in paradise"
                  fill
                  sizes="(max-width: 768px) 100vw, 50vw"
                  className="object-cover"

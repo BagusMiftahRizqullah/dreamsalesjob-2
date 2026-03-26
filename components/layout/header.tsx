@@ -51,6 +51,7 @@ export function Header() {
           <Image 
             src="/images/logo-utama.png" 
             alt="Dream Sales Jobs" 
+            title="Dream Sales Jobs"
             width={220} 
             height={55} 
             className="h-20 w-auto object-contain"

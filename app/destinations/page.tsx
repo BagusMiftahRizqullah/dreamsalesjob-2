@@ -9,8 +9,11 @@ export const metadata: Metadata = {
   description: 'Explore sales opportunities in Bali, Thailand, and Vietnam. Live the dream life while earning high commissions.',
 };
 
-export default function DestinationsPage() {
-  const destinations = getAllDestinations().filter((d) => d.slug !== 'indonesia');
+export const revalidate = 60;
+
+export default async function DestinationsPage() {
+  const allDestinations = await getAllDestinations();
+  const destinations = allDestinations.filter((d) => d.slug !== 'indonesia');
 
   return (
     <>

@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   description: 'Learn everything you need to know about relocating and working in sales in Southeast Asia.',
 };
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export default async function BlogPage() {
+  const posts = await getAllPosts();
 
   return (
     <>
@@ -37,6 +37,7 @@ export default function BlogPage() {
                     <Image
                       src={post.image || 'https://placehold.co/600x400'}
                       alt={post.title}
+                      title={post.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />

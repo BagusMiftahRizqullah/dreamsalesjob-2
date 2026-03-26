@@ -1,4 +1,4 @@
-import { getAllJobs } from '@/lib/api';
+import { getJobsFromDB } from '@/lib/api';
 import { JobsList } from '@/components/jobs/jobs-list';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -10,8 +10,10 @@ export const metadata: Metadata = {
   description: 'Browse the latest high-ticket sales roles in Bali, Thailand, Vietnam and Remote.',
 };
 
-export default function JobsPage() {
-  const jobs = getAllJobs();
+export const revalidate = 60; // Revalidate every minute to show fresh DB data
+
+export default async function JobsPage() {
+  const jobs = await getJobsFromDB();
 
   return (
     <>

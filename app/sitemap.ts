@@ -3,10 +3,10 @@ import { getAllJobs, getAllDestinations, getAllPosts } from '@/lib/api';
 
 const BASE_URL = 'https://dreamsalesjob-2.vercel.app';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const jobs = getAllJobs();
-  const destinations = getAllDestinations();
-  const posts = getAllPosts();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const jobs = await getAllJobs();
+  const destinations = await getAllDestinations();
+  const posts = await getAllPosts();
 
   const staticRoutes = [
     '',

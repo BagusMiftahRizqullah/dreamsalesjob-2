@@ -5,7 +5,6 @@ import { Footer } from '@/components/layout/footer';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { formatDate } from '@/lib/utils';
-import ReactMarkdown from 'react-markdown';
 import { ArrowLeft, Calendar, User } from 'lucide-react';
 import Link from 'next/link';
 
@@ -16,7 +15,7 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = getPostBySlug(params.slug);
+  const post = await getPostBySlug(params.slug);
 
   if (!post) {
     return {
@@ -39,14 +38,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   return posts.map((post) => ({
     slug: post.slug,
   }));
 }
 
-export default function BlogPostPage({ params }: PageProps) {
-  const post = getPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: PageProps) {
+  const post = await getPostBySlug(params.slug);
 
   if (!post) {
     notFound();
@@ -55,6 +54,40 @@ export default function BlogPostPage({ params }: PageProps) {
   return (
     <>
       <Header />
+      {/* Schema Markup for Article and Person (Author) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Article",
+                "headline": post.title,
+                "image": [post.image || 'https://dreamsalesjob-2.vercel.app/images/logo-utama.png'],
+                "datePublished": post.date,
+                "dateModified": post.date,
+                "author": {
+                  "@type": "Person",
+                  "@id": `https://dreamsalesjob-2.vercel.app/author/${encodeURIComponent(post.author)}`,
+                  "name": post.author,
+                  "jobTitle": "Content Writer",
+                  "knowsAbout": ["Sales", "Remote Work", "Career Advice"]
+                },
+                "publisher": {
+                  "@type": "Organization",
+                  "@id": "https://dreamsalesjob-2.vercel.app/#organization",
+                  "name": "Dream Sales Jobs",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://dreamsalesjob-2.vercel.app/images/logo-utama.png"
+                  }
+                }
+              }
+            ]
+          })
+        }}
+      />
       <main className="min-h-screen bg-slate-50 py-12">
         <article className="container mx-auto px-4 md:px-6 max-w-4xl">
           <Link href="/blog" className="inline-flex items-center text-sm text-slate-500 hover:text-primary-600 mb-8 transition-colors">
@@ -67,6 +100,7 @@ export default function BlogPostPage({ params }: PageProps) {
               <Image
                 src={post.image || 'https://placehold.co/1200x600'}
                 alt={post.title}
+                title={post.title}
                 fill
                 className="object-cover"
                 priority
@@ -94,9 +128,10 @@ export default function BlogPostPage({ params }: PageProps) {
 
             {/* Content */}
             <div className="p-8 md:p-12">
-              <div className="prose prose-lg prose-slate max-w-none prose-headings:text-navy-900 prose-a:text-primary-600 hover:prose-a:text-primary-700">
-                <ReactMarkdown>{post.content}</ReactMarkdown>
-              </div>
+              <div 
+                className="prose prose-lg prose-slate max-w-none prose-headings:text-navy-900 prose-a:text-primary-600 hover:prose-a:text-primary-700"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
             </div>
           </div>
         </article>

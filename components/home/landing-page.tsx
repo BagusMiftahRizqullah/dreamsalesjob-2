@@ -16,9 +16,10 @@ interface LandingPageProps {
   heroSubtitle?: string;
 }
 
-export function LandingPage({ heroTitle, heroSubtitle }: LandingPageProps) {
-  const jobs = getAllJobs();
-  const destinations = getAllDestinations()
+export async function LandingPage({ heroTitle, heroSubtitle }: LandingPageProps) {
+  const jobs = await getAllJobs();
+  const allDestinations = await getAllDestinations();
+  const destinations = allDestinations
     .filter((d) => d.slug !== 'indonesia')
     .slice(0, 4);
   const testimonials = getAllTestimonials();

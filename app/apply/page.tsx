@@ -13,12 +13,14 @@ import { Footer } from '@/components/layout/footer';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { submitApplication } from '@/app/apply/actions';
 
 type ApplyFormValues = z.infer<typeof applySchema>;
 
 function ApplyForm() {
   const searchParams = useSearchParams();
   const jobSlug = searchParams.get('job');
+  const jobTitle = searchParams.get('title');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const {
@@ -34,10 +36,17 @@ function ApplyForm() {
   });
 
   const onSubmit = async (data: ApplyFormValues) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log('Form data:', data);
-    setIsSubmitted(true);
+    const result = await submitApplication({
+      ...data,
+      jobSlug: jobSlug || '',
+      jobTitle: jobTitle || '',
+    });
+    
+    if (result.success) {
+      setIsSubmitted(true);
+    } else {
+      alert('Failed to submit application. Please try again.');
+    }
   };
 
   if (isSubmitted) {
@@ -70,6 +79,13 @@ function ApplyForm() {
 
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {jobTitle && (
+            <div className="space-y-2 mb-6 p-4 bg-primary-50 rounded-lg border border-primary-100">
+              <Label className="text-primary-700 font-semibold">Applying for Role</Label>
+              <div className="text-lg font-medium text-navy-900">{jobTitle}</div>
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label htmlFor="fullName">Full Name</Label>
             <Input

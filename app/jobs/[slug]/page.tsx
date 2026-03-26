@@ -1,4 +1,4 @@
-import { getAllJobs, getJobBySlug, getDestinationBySlug } from '@/lib/api';
+import { getJobsFromDB, getJobBySlug, getDestinationBySlug } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -16,8 +16,10 @@ interface PageProps {
   };
 }
 
+export const revalidate = 60; // Revalidate every minute
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const job = getJobBySlug(params.slug);
+  const job = await getJobBySlug(params.slug);
 
   if (!job) {
     return {
@@ -37,20 +39,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const jobs = getAllJobs();
+  const jobs = await getJobsFromDB();
   return jobs.map((job) => ({
     slug: job.slug,
   }));
 }
 
-export default function JobPage({ params }: PageProps) {
-  const job = getJobBySlug(params.slug);
+export default async function JobPage({ params }: PageProps) {
+  const job = await getJobBySlug(params.slug);
 
   if (!job) {
     notFound();
   }
 
-  const destination = getDestinationBySlug(job.destination);
+  // Get related jobs
+  const allJobs = await getJobsFromDB();
+  const relatedJobs = allJobs
+    .filter((j) => j.id !== job.id && (j.destination === job.destination || j.type === job.type))
+    .slice(0, 3);
+
+  const destination = await getDestinationBySlug(job.destination);
   const bgImage = destination?.image || '/images/place/bali.png';
 
   // JSON-LD for JobPosting
@@ -106,6 +114,7 @@ export default function JobPage({ params }: PageProps) {
         <Image
           src={bgImage}
           alt={job.location}
+          title={job.location}
           fill
           className="object-cover"
           priority
@@ -210,7 +219,7 @@ export default function JobPage({ params }: PageProps) {
             <div className="lg:col-span-1 space-y-6">
               <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm sticky top-24">
                 <h3 className="text-lg font-semibold text-navy-900 mb-4">Interested?</h3>
-                <Link href={`/apply?job=${job.slug}`} className="block w-full">
+                <Link href={`/apply?job=${job.slug}&title=${encodeURIComponent(job.title)}`} className="block w-full">
                   <Button size="lg" className="w-full bg-secondary-500 hover:bg-secondary-600 text-white font-bold shadow-lg shadow-secondary-500/20">
                     Apply Now
                   </Button>

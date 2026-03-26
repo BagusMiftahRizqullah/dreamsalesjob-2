@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Job } from '@/types';
 import { Button } from '@/components/ui/button';
 import { MapPin, Briefcase, DollarSign, Clock } from 'lucide-react';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, formatDate } from '@/lib/utils';
 
 interface JobCardProps {
   job: Job;
@@ -48,7 +48,7 @@ export function JobCard({ job }: JobCardProps) {
       </div>
 
       <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4">
-        <span className="text-xs text-slate-400">Posted {new Date(job.postedDate).toLocaleDateString()}</span>
+        <span className="text-xs text-slate-400">Posted {formatDate(job.postedDate.toString())}</span>
         <Button variant="ghost" size="sm" className="z-10 text-primary-600 hover:text-primary-700 hover:bg-primary-50">
           View Details
         </Button>

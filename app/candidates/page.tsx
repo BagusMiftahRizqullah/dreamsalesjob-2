@@ -137,6 +137,7 @@ export default function CandidatesPage() {
                  <Image
                    src="/images/howitworks.png"
                    alt="How it works"
+                   title="How it works"
                    fill
                    className="object-contain p-8"
                  />

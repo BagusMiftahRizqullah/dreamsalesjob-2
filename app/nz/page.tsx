@@ -6,7 +6,9 @@ export const metadata: Metadata = {
   description: 'Find high-paying sales roles in Bali, Thailand & Vietnam. Designed for New Zealanders looking to relocate.',
 };
 
-export default function NzPage() {
+export const revalidate = 60;
+
+export default async function NzPage() {
   return (
     <LandingPage
       heroTitle={

@@ -2,81 +2,122 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { Job, BlogPost, Testimonial, Destination } from '@/types';
+import connectDB from './mongodb';
+import JobModel from './models/Job';
+import DestinationModel from './models/Destination';
+import BlogModel from './models/Blog';
 
-const jobsDirectory = path.join(process.cwd(), 'content/jobs');
 const postsDirectory = path.join(process.cwd(), 'content/blog');
 const testimonialsPath = path.join(process.cwd(), 'content/testimonials.json');
 
 // --- Jobs ---
 
-export function getAllJobs(): Job[] {
-  if (!fs.existsSync(jobsDirectory)) {
+export async function getJobsFromDB(): Promise<Job[]> {
+  try {
+    await connectDB();
+    const jobs = await JobModel.find({ isActive: true }).sort({ postedDate: -1 }).lean();
+    
+    return jobs.map((job: any) => ({
+      id: job._id.toString(),
+      slug: job.slug,
+      title: job.title,
+      destination: job.destination,
+      type: job.type,
+      location: job.location,
+      salary: job.salary,
+      description: job.description,
+      requirements: job.requirements || [],
+      responsibilities: job.responsibilities || [],
+      postedDate: job.postedDate.toISOString(),
+      employer: job.employer,
+      industry: job.industry,
+      seniority: job.seniority,
+    }));
+  } catch (error) {
+    console.error('Failed to fetch jobs from DB:', error);
     return [];
   }
-  const fileNames = fs.readdirSync(jobsDirectory).filter(file => file.endsWith('.json'));
-  const allJobsData = fileNames.map((fileName) => {
-    const fullPath = path.join(jobsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const job = JSON.parse(fileContents) as Job;
-    return job;
-  });
-
-  return allJobsData.sort((a, b) => {
-    if (a.postedDate < b.postedDate) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
 }
 
-export function getJobBySlug(slug: string): Job | undefined {
-  const jobs = getAllJobs();
-  return jobs.find((job) => job.slug === slug);
+export async function getAllJobs(): Promise<Job[]> {
+  return getJobsFromDB();
 }
 
-export function getJobsByDestination(destination: string): Job[] {
-  const jobs = getAllJobs();
+export async function getJobBySlug(slug: string): Promise<Job | null> {
+  try {
+    await connectDB();
+    const job = await JobModel.findOne({ slug, isActive: true }).lean();
+    
+    if (!job) return null;
+    
+    return {
+      id: job._id.toString(),
+      slug: job.slug,
+      title: job.title,
+      destination: job.destination,
+      type: job.type,
+      location: job.location,
+      salary: job.salary,
+      description: job.description,
+      requirements: job.requirements || [],
+      responsibilities: job.responsibilities || [],
+      postedDate: job.postedDate.toISOString(),
+      employer: job.employer,
+      industry: job.industry,
+      seniority: job.seniority,
+    } as Job;
+  } catch (error) {
+    console.error('Failed to fetch job by slug from DB:', error);
+    return null;
+  }
+}
+
+export async function getJobsByDestination(destination: string): Promise<Job[]> {
+  const jobs = await getAllJobs();
   return jobs.filter((job) => job.destination === destination);
 }
 
 // --- Blog ---
 
-export function getAllPosts(): BlogPost[] {
-  if (!fs.existsSync(postsDirectory)) {
+export async function getAllPosts(): Promise<BlogPost[]> {
+  try {
+    await connectDB();
+    const posts = await BlogModel.find({ isActive: true }).sort({ date: -1 }).lean();
+    return posts.map(post => ({
+      slug: post.slug,
+      title: post.title,
+      excerpt: post.excerpt,
+      date: post.date.toISOString(),
+      author: post.author,
+      content: post.content,
+      image: post.image,
+      category: post.category,
+    })) as BlogPost[];
+  } catch (error) {
+    console.error('Failed to fetch posts from DB:', error);
     return [];
   }
-  const fileNames = fs.readdirSync(postsDirectory).filter(file => file.endsWith('.mdx'));
-  const allPostsData = fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.mdx$/, '');
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
-
-    return {
-      slug: slug,
-      title: data.title,
-      excerpt: data.excerpt,
-      date: data.date,
-      author: data.author,
-      content: content,
-      image: data.image,
-      category: data.category,
-    } as BlogPost;
-  });
-
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
 }
 
-export function getPostBySlug(slug: string): BlogPost | undefined {
-  const posts = getAllPosts();
-  return posts.find((post) => post.slug === slug);
+export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
+  try {
+    await connectDB();
+    const post = await BlogModel.findOne({ slug, isActive: true }).lean();
+    if (!post) return undefined;
+    return {
+      slug: post.slug,
+      title: post.title,
+      excerpt: post.excerpt,
+      date: post.date.toISOString(),
+      author: post.author,
+      content: post.content,
+      image: post.image,
+      category: post.category,
+    } as BlogPost;
+  } catch (error) {
+    console.error('Failed to fetch post by slug from DB:', error);
+    return undefined;
+  }
 }
 
 // --- Testimonials ---
@@ -91,72 +132,43 @@ export function getAllTestimonials(): Testimonial[] {
 }
 
 // --- Destinations ---
-// Hardcoding destinations for now as they are static data mostly
-export const destinations: Destination[] = [
- 
-  {
-    slug: 'salesjobsbali',
-    name: 'Bali',
-    description: 'The Island of Gods offers a perfect blend of luxury lifestyle and high-ticket sales opportunities in real estate and hospitality.',
-    image: '/images/place/bali.png',
-    stats: {
-      averageEarnings: '$80k - $150k',
-      costOfLiving: 'Low ($2k/mo)',
-      visaType: 'B211A / KITAS'
-    }
-  },
-  {
-    slug: 'salesjobsvietnam',
-    name: 'Vietnam',
-    description: 'One of the fastest-growing economies in Asia. Huge demand for tech sales and recruitment consultants in Ho Chi Minh City.',
-    image: '/images/place/vietnam.png',
-    stats: {
-      averageEarnings: '$50k - $100k',
-      costOfLiving: 'Very Low ($1.2k/mo)',
-      visaType: 'Business Visa'
-    }
-  },
-   {
-    slug: 'salesjobsthailand',
-    name: 'Thailand',
-    description: 'From Bangkok skyscrapers to Phuket beaches, Thailand is a hub for expat sales professionals in finance, insurance, and marine industries.',
-    image: '/images/place/thailand.png',
-    stats: {
-      averageEarnings: '$60k - $120k',
-      costOfLiving: 'Low ($1.5k/mo)',
-      visaType: 'LTR / Non-B'
-    }
-  },
- 
-  {
-    slug: 'remotesalesjobs',
-    name: 'Remote',
-    description: 'Work from anywhere with flexible schedules and global clients.',
-    image: '/images/place/remote.png',
-    stats: {
-      averageEarnings: '$60k - $120k',
-      costOfLiving: 'Low ($1.5k/mo)',
-      visaType: 'LTR / Non-B'
-    }
-  },
-  
-  {
-    slug: 'indonesia',
-    name: 'Indonesia',
-    description: 'Beyond Bali, opportunities abound in Jakarta’s bustling tech and business sectors.',
-    image: '/images/place/indonesia.png',
-    stats: {
-      averageEarnings: '$50k - $100k',
-      costOfLiving: 'Low ($1.2k/mo)',
-      visaType: 'KITAS'
-    }
-  }
-];
 
-export function getDestinationBySlug(slug: string): Destination | undefined {
-  return destinations.find((d) => d.slug === slug);
+export async function getDestinationsFromDB(): Promise<Destination[]> {
+  try {
+    await connectDB();
+    const destinations = await DestinationModel.find({ isActive: true }).lean();
+    
+    return destinations.map((dest: any) => ({
+      slug: dest.slug,
+      name: dest.name,
+      description: dest.description,
+      image: dest.image,
+      stats: dest.stats,
+    }));
+  } catch (error) {
+    console.error('Failed to fetch destinations from DB:', error);
+    return [];
+  }
 }
 
-export function getAllDestinations(): Destination[] {
-  return destinations;
+export async function getDestinationBySlug(slug: string): Promise<Destination | null> {
+  try {
+    await connectDB();
+    const dest = await DestinationModel.findOne({ slug, isActive: true }).lean();
+    if (!dest) return null;
+    return {
+      slug: dest.slug,
+      name: dest.name,
+      description: dest.description,
+      image: dest.image,
+      stats: dest.stats,
+    } as Destination;
+  } catch (error) {
+    console.error('Failed to fetch destination by slug from DB:', error);
+    return null;
+  }
+}
+
+export async function getAllDestinations(): Promise<Destination[]> {
+  return getDestinationsFromDB();
 }

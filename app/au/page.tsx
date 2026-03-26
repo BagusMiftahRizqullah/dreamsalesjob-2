@@ -6,7 +6,9 @@ export const metadata: Metadata = {
   description: 'Find high-paying sales roles in Bali, Thailand & Vietnam. Designed for Australians looking to relocate.',
 };
 
-export default function AuPage() {
+export const revalidate = 60;
+
+export default async function AuPage() {
   return (
     <LandingPage
       heroTitle={
@@ -14,7 +16,7 @@ export default function AuPage() {
           High-Ticket Sales Jobs for <span className="text-primary-600">Australians</span>
         </>
       }
-      heroSubtitle="Escape the rising cost of living in Australia. Earn AUD in Bali, Thailand & Vietnam with full relocation support and tax-free earning potential."
+      heroSubtitle="Escape the high cost of living. Use your sales skills to earn AU$15k+ per month while living in Bali, Vietnam, or Thailand."
     />
   );
 }

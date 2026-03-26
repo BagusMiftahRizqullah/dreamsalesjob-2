@@ -13,6 +13,7 @@ export function Footer() {
               <Image 
                 src="/images/logo-utama.png" 
                 alt="Dream Sales Jobs" 
+                title="Dream Sales Jobs"
                 width={180} 
                 height={40} 
                 className="h-10 w-auto object-contain bg-white rounded-md p-1"

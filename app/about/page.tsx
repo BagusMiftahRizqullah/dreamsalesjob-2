@@ -45,6 +45,7 @@ export default function AboutPage() {
                   <Image
                     src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1632"
                     alt="Team meeting"
+                    title="Team meeting"
                     fill
                     className="object-cover"
                   />
@@ -53,6 +54,7 @@ export default function AboutPage() {
                   <Image
                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1470"
                     alt="Working together"
+                    title="Working together"
                     fill
                     className="object-cover"
                   />

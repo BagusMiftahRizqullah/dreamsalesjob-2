@@ -102,6 +102,7 @@ export default function EmployersPage() {
                  <Image
                    src="/images/SimpleHiring.png"
                    alt="Simple Hiring Process"
+                   title="Simple Hiring Process"
                    fill
                    className="object-cover"
                  />
