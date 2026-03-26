@@ -1,12 +1,17 @@
 import { MetadataRoute } from 'next';
 import { getAllJobs, getAllDestinations, getAllPosts } from '@/lib/api';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Revalidate every hour
+
 const BASE_URL = 'https://dreamsalesjob-2.vercel.app';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const jobs = await getAllJobs();
-  const destinations = await getAllDestinations();
-  const posts = await getAllPosts();
+  const [jobs, destinations, posts] = await Promise.all([
+    getAllJobs(),
+    getAllDestinations(),
+    getAllPosts(),
+  ]);
 
   const staticRoutes = [
     '',
