@@ -59,7 +59,7 @@ export default async function DestinationPage({ params }: PageProps) {
               {
                 "@type": "LocalBusiness",
                 "name": `Dream Sales Jobs in ${destination.name}`,
-                "image": "https://dreamsalesjob-2.vercel.app/images/logo-utama.png",
+                "image": "https://dreamsalesjob-2.vercel.app/images/logo-utama.webp",
                 "url": `https://dreamsalesjob-2.vercel.app/destinations/${destination.slug}`,
                 "address": {
                   "@type": "PostalAddress",

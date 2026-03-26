@@ -87,7 +87,7 @@ export function DestinationForm({ destination, onSuccess, onCancel }: Destinatio
               type="text"
               id="image"
               name="image"
-              defaultValue={destination?.image || '/images/place/default.png'}
+              defaultValue={destination?.image || '/images/place/default.webp'}
               required
               className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all"
             />

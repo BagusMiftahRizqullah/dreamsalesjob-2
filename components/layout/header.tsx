@@ -49,7 +49,7 @@ export function Header() {
       <div className="container flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image 
-            src="/images/logo-utama.png" 
+            src="/images/logo-utama.webp" 
             alt="Dream Sales Jobs" 
             title="Dream Sales Jobs"
             width={220} 

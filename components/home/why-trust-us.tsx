@@ -33,7 +33,7 @@ export function WhyTrustUs() {
           </div>
           <div className="flex-1 relative aspect-video w-full rounded-2xl overflow-hidden bg-slate-100 shadow-xl">
              <Image
-                src="/images/TrustUs.png"
+                src="/images/TrustUs.webp"
                 alt="Why Trust Dream Sales Jobs"
                 title="Why Trust Dream Sales Jobs"
                 fill

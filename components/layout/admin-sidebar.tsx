@@ -25,7 +25,7 @@ export function AdminSidebar() {
       <div className="md:hidden flex items-center justify-between bg-white border-b border-slate-200 p-4 sticky top-0 z-40">
         <Link href="/admin-dreamsalesjobs" className="flex items-center gap-2">
           <Image 
-            src="/images/logo-utama.png" 
+            src="/images/logo-utama.webp" 
             alt="Dream Sales Jobs" 
             title="Dream Sales Jobs"
             width={120} 
@@ -58,7 +58,7 @@ export function AdminSidebar() {
         <div className="p-6 border-b border-slate-100 flex items-center justify-between">
           <Link href="/admin-dreamsalesjobs" className="flex items-center gap-2">
             <Image 
-              src="/images/logo-utama.png" 
+              src="/images/logo-utama.webp" 
               alt="Dream Sales Jobs" 
               title="Dream Sales Jobs"
               width={140} 

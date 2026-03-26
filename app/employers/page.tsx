@@ -100,7 +100,7 @@ export default function EmployersPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1 relative rounded-2xl overflow-hidden h-full min-h-[400px] shadow-xl">
                  <Image
-                   src="/images/SimpleHiring.png"
+                   src="/images/SimpleHiring.webp"
                    alt="Simple Hiring Process"
                    title="Simple Hiring Process"
                    fill

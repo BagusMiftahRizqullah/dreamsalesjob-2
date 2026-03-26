@@ -34,7 +34,7 @@ const destinations = [
     slug: 'salesjobsbali',
     name: 'Bali',
     description: 'The Island of Gods offers a perfect blend of luxury lifestyle and high-ticket sales opportunities in real estate and hospitality.',
-    image: '/images/place/bali.png',
+    image: '/images/place/bali.webp',
     stats: {
       averageEarnings: '$80k - $150k',
       costOfLiving: 'Low ($2k/mo)',
@@ -45,7 +45,7 @@ const destinations = [
     slug: 'salesjobsvietnam',
     name: 'Vietnam',
     description: 'One of the fastest-growing economies in Asia. Huge demand for tech sales and recruitment consultants in Ho Chi Minh City.',
-    image: '/images/place/vietnam.png',
+    image: '/images/place/vietnam.webp',
     stats: {
       averageEarnings: '$50k - $100k',
       costOfLiving: 'Very Low ($1.2k/mo)',
@@ -56,7 +56,7 @@ const destinations = [
     slug: 'salesjobsthailand',
     name: 'Thailand',
     description: 'From Bangkok skyscrapers to Phuket beaches, Thailand is a hub for expat sales professionals in finance, insurance, and marine industries.',
-    image: '/images/place/thailand.png',
+    image: '/images/place/thailand.webp',
     stats: {
       averageEarnings: '$60k - $120k',
       costOfLiving: 'Low ($1.5k/mo)',
@@ -67,7 +67,7 @@ const destinations = [
     slug: 'remotesalesjobs',
     name: 'Remote',
     description: 'Work from anywhere with flexible schedules and global clients.',
-    image: '/images/place/remote.png',
+    image: '/images/place/remote.webp',
     stats: {
       averageEarnings: '$60k - $120k',
       costOfLiving: 'Low ($1.5k/mo)',
@@ -78,7 +78,7 @@ const destinations = [
     slug: 'indonesia',
     name: 'Indonesia',
     description: 'Beyond Bali, opportunities abound in Jakarta’s bustling tech and business sectors.',
-    image: '/images/place/indonesia.png',
+    image: '/images/place/indonesia.webp',
     stats: {
       averageEarnings: '$50k - $100k',
       costOfLiving: 'Low ($1.2k/mo)',

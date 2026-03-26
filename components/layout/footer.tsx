@@ -11,7 +11,7 @@ export function Footer() {
           <div className="space-y-4">
             <Link href="/" className="block">
               <Image 
-                src="/images/logo-utama.png" 
+                src="/images/logo-utama.webp" 
                 alt="Dream Sales Jobs" 
                 title="Dream Sales Jobs"
                 width={180} 

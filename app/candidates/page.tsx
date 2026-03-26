@@ -135,7 +135,7 @@ export default function CandidatesPage() {
               </div>
               <div className="bg-slate-100 rounded-2xl p-8 h-full min-h-[400px] flex items-center justify-center relative overflow-hidden">
                  <Image
-                   src="/images/howitworks.png"
+                   src="/images/howitworks.webp"
                    alt="How it works"
                    title="How it works"
                    fill

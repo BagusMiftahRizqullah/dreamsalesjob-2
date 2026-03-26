@@ -33,7 +33,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-100 p-8 space-y-8">
         <div className="flex flex-col items-center text-center space-y-4">
           <Image 
-            src="/images/logo-utama.png" 
+            src="/images/logo-utama.webp" 
             alt="Dream Sales Jobs" 
             title="Dream Sales Jobs"
             width={220} 

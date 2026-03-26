@@ -59,7 +59,7 @@ export default async function JobPage({ params }: PageProps) {
     .slice(0, 3);
 
   const destination = await getDestinationBySlug(job.destination);
-  const bgImage = destination?.image || '/images/place/bali.png';
+  const bgImage = destination?.image || '/images/place/bali.webp';
 
   // JSON-LD for JobPosting
   const jsonLd = {

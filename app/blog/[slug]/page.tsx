@@ -64,7 +64,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               {
                 "@type": "Article",
                 "headline": post.title,
-                "image": [post.image || 'https://dreamsalesjob-2.vercel.app/images/logo-utama.png'],
+                "image": [post.image || 'https://dreamsalesjob-2.vercel.app/images/logo-utama.webp'],
                 "datePublished": post.date,
                 "dateModified": post.date,
                 "author": {
@@ -80,7 +80,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   "name": "Dream Sales Jobs",
                   "logo": {
                     "@type": "ImageObject",
-                    "url": "https://dreamsalesjob-2.vercel.app/images/logo-utama.png"
+                    "url": "https://dreamsalesjob-2.vercel.app/images/logo-utama.webp"
                   }
                 }
               }

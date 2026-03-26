@@ -24,7 +24,7 @@ export default function RootLayout({
     '@type': 'Organization',
     name: 'Dream Sales Jobs',
     url: 'https://dreamsalesjob-2.vercel.app',
-    logo: 'https://dreamsalesjob-2.vercel.app/images/logo-utama.png',
+    logo: 'https://dreamsalesjob-2.vercel.app/images/logo-utama.webp',
     sameAs: [
       'https://www.linkedin.com/company/dreamsalesjobs',
       'https://twitter.com/dreamsalesjobs',
