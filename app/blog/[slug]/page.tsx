@@ -40,6 +40,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
+export const revalidate = 60; // Revalidate every minute
+
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   return posts.map((post) => ({
