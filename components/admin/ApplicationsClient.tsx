@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Search, Eye, Trash2, X, Download } from 'lucide-react';
 import { updateApplicationStatus, deleteApplication } from '@/app/admin-dreamsalesjobs/applications/actions';
 import { Pagination } from './Pagination';
@@ -26,7 +26,8 @@ export function ApplicationsClient({ initialApplications }: ApplicationsClientPr
     );
   }, [applications, searchQuery]);
 
-  useMemo(() => {
+  // Reset page when search query changes
+  useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery]);
 

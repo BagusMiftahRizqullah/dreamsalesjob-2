@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Plus, Edit, Trash2, X, Search } from 'lucide-react';
 import { deleteJob } from '@/app/admin-dreamsalesjobs/jobs/actions';
 import { JobForm } from '@/components/admin/JobForm';
@@ -28,7 +28,7 @@ export function JobsClient({ jobs, destinations }: JobsClientProps) {
   }, [jobs, searchQuery]);
 
   // Reset page when search query changes
-  useMemo(() => {
+  useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery]);
 

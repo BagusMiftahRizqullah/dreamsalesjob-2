@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Search } from 'lucide-react';
 import { DestinationForm } from './DestinationForm';
 import { Pagination } from './Pagination';
@@ -25,7 +25,7 @@ export function DestinationsClient({ initialDestinations }: DestinationsClientPr
     );
   }, [destinations, searchQuery]);
 
-  useMemo(() => {
+  useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery]);
 

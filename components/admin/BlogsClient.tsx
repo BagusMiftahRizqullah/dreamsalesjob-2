@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Search } from 'lucide-react';
 import { BlogForm } from './BlogForm';
 import { Pagination } from './Pagination';
@@ -26,7 +26,7 @@ export function BlogsClient({ initialBlogs }: BlogsClientProps) {
     );
   }, [blogs, searchQuery]);
 
-  useMemo(() => {
+  useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery]);
 
