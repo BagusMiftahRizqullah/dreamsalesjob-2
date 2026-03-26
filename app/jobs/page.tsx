@@ -7,7 +7,10 @@ import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'All Sales Jobs | Dream Sales Jobs',
-  description: 'Browse the latest high-ticket sales roles in Bali, Thailand, Vietnam and Remote.',
+  description: 'Browse the latest high-ticket sales roles in Bali, Thailand, Vietnam, and remote locations. Apply now to secure your dream lifestyle and career.',
+  alternates: {
+    canonical: '/jobs',
+  },
 };
 
 export const revalidate = 60; // Revalidate every minute to show fresh DB data

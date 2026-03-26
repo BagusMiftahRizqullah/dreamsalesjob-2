@@ -26,7 +26,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `Sales Jobs in ${destination.name} | Dream Sales Jobs`,
-    description: `Find high-paying sales jobs in ${destination.name}. ${destination.description}`,
+    description: `Find high-paying sales jobs in ${destination.name}. Explore top-tier opportunities for international professionals to earn top commissions while living abroad.`,
+    alternates: {
+      canonical: `/destinations/${destination.slug}`,
+    },
   };
 }
 

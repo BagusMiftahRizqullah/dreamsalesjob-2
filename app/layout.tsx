@@ -10,6 +10,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://dreamsalesjob-2.vercel.app'),
+  alternates: {
+    canonical: '/',
+  },
   title: "Dream Sales Jobs | Travel the World with High-Paying Sales Careers",
   description: "Specialist recruitment for Australians, New Zealanders, & British looking to trade the 9-5 for luxury resort careers or remote work worldwide.",
 };

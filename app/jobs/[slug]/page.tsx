@@ -29,10 +29,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `${job.title} in ${job.location} | Dream Sales Jobs`,
-    description: `Apply for ${job.title} at ${job.employer.name}. Earn ${formatCurrency(job.salary.min)} - ${formatCurrency(job.salary.max)}.`,
+    description: `Apply for the ${job.title} position at ${job.employer.name} in ${job.location}. Earn a highly competitive salary of ${formatCurrency(job.salary.min)} - ${formatCurrency(job.salary.max)} today.`,
+    alternates: {
+      canonical: `/jobs/${job.slug}`,
+    },
     openGraph: {
       title: `${job.title} in ${job.location}`,
-      description: `Apply for ${job.title} at ${job.employer.name}.`,
+      description: `Apply for the ${job.title} position at ${job.employer.name} in ${job.location}. Earn a highly competitive salary of ${formatCurrency(job.salary.min)} - ${formatCurrency(job.salary.max)} today.`,
       type: 'article',
     },
   };

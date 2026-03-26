@@ -4,7 +4,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Dream Sales Jobs',
-  description: 'Privacy Policy for Dream Sales Jobs.',
+  description: 'Read the Privacy Policy for Dream Sales Jobs. Learn how we securely manage and protect your personal information while you explore global sales careers.',
+  alternates: {
+    canonical: '/privacy',
+  },
 };
 
 export default function PrivacyPage() {

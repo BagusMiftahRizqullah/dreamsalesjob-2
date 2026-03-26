@@ -3,7 +3,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Sales Jobs in Southeast Asia for Brits | Dream Sales Jobs',
-  description: 'Find high-paying sales roles in Bali, Thailand & Vietnam. Designed for UK citizens looking to relocate.',
+  description: 'Discover high-paying sales roles in Bali, Thailand, and Vietnam. Specially designed for UK citizens seeking an amazing lifestyle and career abroad.',
+  alternates: {
+    canonical: '/uk',
+  },
 };
 
 export const dynamic = 'force-dynamic';

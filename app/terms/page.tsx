@@ -4,7 +4,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Terms of Service | Dream Sales Jobs',
-  description: 'Terms of Service for Dream Sales Jobs.',
+  description: 'Review the Terms of Service for Dream Sales Jobs. Understand our policies and user agreements for using our international recruitment platform today.',
+  alternates: {
+    canonical: '/terms',
+  },
 };
 
 export default function TermsPage() {

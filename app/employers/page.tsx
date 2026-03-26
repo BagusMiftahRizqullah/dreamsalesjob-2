@@ -8,7 +8,10 @@ import { CheckCircle2, UserCheck, TrendingUp, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'For Employers | Dream Sales Jobs',
-  description: 'Hire top-tier sales talent from Australia, UK, and New Zealand for your business in Southeast Asia.',
+  description: 'Hire top-tier sales talent from Australia, the UK, and New Zealand. Boost your business in Southeast Asia with elite international sales professionals.',
+  alternates: {
+    canonical: '/employers',
+  },
 };
 
 export default function EmployersPage() {

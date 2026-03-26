@@ -8,7 +8,10 @@ import { CheckCircle2, DollarSign, Globe, Briefcase } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'For Candidates | Dream Sales Jobs',
-  description: 'Land your dream sales job in Bali, Thailand, or Vietnam. We help Australians, Kiwis, and Brits find high-ticket roles abroad.',
+  description: 'Land your dream sales job in Bali, Thailand, or Vietnam. We help Australians, Kiwis, and Brits find high-ticket roles abroad for a better life.',
+  alternates: {
+    canonical: '/candidates',
+  },
 };
 
 export default function CandidatesPage() {

@@ -9,7 +9,10 @@ import { Calendar, User } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Blog & Resources | Dream Sales Jobs',
-  description: 'Learn everything you need to know about relocating and working in sales in Southeast Asia.',
+  description: 'Discover expert tips and guides on relocating, living, and working in high-paying sales jobs across top destinations in Southeast Asia today.',
+  alternates: {
+    canonical: '/blog',
+  },
 };
 
 export default async function BlogPage() {

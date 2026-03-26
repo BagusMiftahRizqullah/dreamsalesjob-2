@@ -3,7 +3,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Sales Jobs in Southeast Asia for Australians | Dream Sales Jobs',
-  description: 'Find high-paying sales roles in Bali, Thailand & Vietnam. Designed for Australians looking to relocate.',
+  description: 'Discover high-paying sales roles in Bali, Thailand, and Vietnam. Specially designed for Australians seeking an amazing lifestyle and career abroad.',
+  alternates: {
+    canonical: '/au',
+  },
 };
 
 export const dynamic = 'force-dynamic';

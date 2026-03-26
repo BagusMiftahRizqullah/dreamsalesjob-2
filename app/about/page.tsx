@@ -5,7 +5,10 @@ import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'About Us | Dream Sales Jobs',
-  description: 'We connect top sales talent with the best employers in Southeast Asia.',
+  description: 'Learn about Dream Sales Jobs. We connect ambitious international sales talent with verified, high-paying employers across beautiful Southeast Asia.',
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default function AboutPage() {
