@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'Find high-paying sales roles in Bali, Thailand & Vietnam. Designed for UK citizens looking to relocate.',
 };
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function UkPage() {
   return (

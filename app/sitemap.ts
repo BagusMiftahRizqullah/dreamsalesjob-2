@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllJobs, getAllDestinations, getAllPosts } from '@/lib/api';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 0; // Don't cache sitemap to prevent build timeouts
 
 const BASE_URL = 'https://dreamsalesjob-2.vercel.app';
 
