@@ -17,8 +17,10 @@ interface LandingPageProps {
 }
 
 export async function LandingPage({ heroTitle, heroSubtitle }: LandingPageProps) {
-  const jobs = await getAllJobs();
-  const allDestinations = await getAllDestinations();
+  const [jobs, allDestinations] = await Promise.all([
+    getAllJobs(),
+    getAllDestinations(),
+  ]);
   const destinations = allDestinations
     .filter((d) => d.slug !== 'indonesia')
     .slice(0, 4);
