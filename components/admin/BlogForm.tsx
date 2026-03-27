@@ -1,16 +1,25 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo, useEffect, useCallback } from 'react';
 import { createBlog, updateBlog } from '@/app/admin-dreamsalesjobs/blogs/actions';
-import { Loader2, Eye } from 'lucide-react';
+import { Loader2, Eye, UploadCloud, X, Image as ImageIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import 'react-quill/dist/quill.snow.css';
 
 // Dynamically import react-quill to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill'), { 
-  ssr: false,
-  loading: () => <div className="h-64 w-full bg-slate-50 border border-slate-200 rounded-lg animate-pulse flex items-center justify-center text-slate-400">Loading Editor...</div>
-});
+const ReactQuill = dynamic(
+  async () => {
+    const { default: RQ } = await import('react-quill');
+    return function Comp({ forwardedRef, ...props }: any) {
+      return <RQ ref={forwardedRef} {...props} />;
+    };
+  },
+  { 
+    ssr: false,
+    loading: () => <div className="h-64 w-full bg-slate-50 border border-slate-200 rounded-lg animate-pulse flex items-center justify-center text-slate-400">Loading Editor...</div>
+  }
+);
 
 interface BlogFormProps {
   blog?: any;
@@ -18,30 +27,171 @@ interface BlogFormProps {
   onCancel: () => void;
 }
 
-const modules = {
-  toolbar: [
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-    ['link', 'image', 'video'],
-    ['clean']
-  ],
-};
-
 const formats = [
   'header',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent',
-  'link', 'image', 'video'
+  'link', 'image', 'video',
+  'align'
 ];
 
 export function BlogForm({ blog, onSuccess, onCancel }: BlogFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [content, setContent] = useState(blog?.content || '');
+  const [featuredImage, setFeaturedImage] = useState(blog?.image || '');
+  const [featuredImageProgress, setFeaturedImageProgress] = useState<number | null>(null);
+  
+  // Media Library States
+  const [isMediaModalOpen, setIsMediaModalOpen] = useState(false);
+  const [mediaActiveTab, setMediaActiveTab] = useState<'upload' | 'library'>('upload');
+  const [libraryImages, setLibraryImages] = useState<any[]>([]);
+  const [isLoadingLibrary, setIsLoadingLibrary] = useState(false);
+  const [mediaTarget, setMediaTarget] = useState<'featured' | 'editor'>('featured');
+
   const formRef = useRef<HTMLFormElement>(null);
+  const quillRef = useRef<any>(null);
 
   const isEditing = !!blog;
+
+  // Fetch images for media library
+  const fetchLibraryImages = async () => {
+    setIsLoadingLibrary(true);
+    try {
+      const res = await fetch('/api/images');
+      if (res.ok) {
+        const data = await res.json();
+        setLibraryImages(data.images || []);
+      }
+    } catch (err) {
+      console.error('Failed to fetch library images', err);
+    } finally {
+      setIsLoadingLibrary(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isMediaModalOpen && mediaActiveTab === 'library') {
+      fetchLibraryImages();
+    }
+  }, [isMediaModalOpen, mediaActiveTab]);
+
+  const openMediaModal = useCallback((target: 'featured' | 'editor') => {
+    setMediaTarget(target);
+    setIsMediaModalOpen(true);
+  }, []);
+
+  const handleImageSelect = useCallback((url: string) => {
+    if (mediaTarget === 'featured') {
+      setFeaturedImage(url);
+    } else if (mediaTarget === 'editor') {
+      const quill = quillRef.current?.getEditor();
+      if (quill) {
+        const range = quill.getSelection(true);
+        quill.insertEmbed(range.index, 'image', url);
+        quill.setSelection(range.index + 1);
+      }
+    }
+    setIsMediaModalOpen(false);
+  }, [mediaTarget]);
+
+  const imageHandler = useCallback(() => {
+    openMediaModal('editor');
+  }, [openMediaModal]);
+
+  const modules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{'align': []}],
+        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+        ['link', 'image', 'video'],
+        ['clean']
+      ],
+      handlers: {
+        image: imageHandler
+      }
+    }
+  }), [imageHandler]);
+
+  const handleFeaturedImageUpload = (file: File): Promise<string | void> => {
+    return new Promise((resolve, reject) => {
+      if (file.size > 2 * 1024 * 1024) {
+        alert('File size exceeds 2MB limit.');
+        resolve();
+        return;
+      }
+
+      const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        alert('Invalid file format. Only JPG, PNG, GIF, and WEBP are allowed.');
+        resolve();
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+      const slugInput = document.getElementById('slug') as HTMLInputElement;
+      formData.append('slug', slugInput?.value || 'featured');
+
+      try {
+        setFeaturedImageProgress(0);
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/upload/image', true);
+        
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const percentComplete = Math.round((event.loaded / event.total) * 100);
+            setFeaturedImageProgress(percentComplete);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            setFeaturedImage(response.url);
+            resolve(response.url);
+          } else {
+            const response = JSON.parse(xhr.responseText);
+            alert(response.error || 'Upload failed');
+            resolve();
+          }
+          setFeaturedImageProgress(null);
+        };
+
+        xhr.onerror = () => {
+          alert('Upload failed due to network error');
+          setFeaturedImageProgress(null);
+          resolve();
+        };
+
+        xhr.send(formData);
+      } catch (error) {
+        console.error('Error uploading featured image:', error);
+        alert('Upload failed');
+        setFeaturedImageProgress(null);
+        resolve();
+      }
+    });
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      handleFeaturedImageUpload(files[0]).then((url: any) => {
+        if (url) handleImageSelect(url);
+      });
+    }
+  };
 
   const handlePreview = () => {
     if (!formRef.current) return;
@@ -52,7 +202,7 @@ export function BlogForm({ blog, onSuccess, onCancel }: BlogFormProps) {
       slug: formData.get('slug') || 'preview-slug',
       excerpt: formData.get('excerpt') || '',
       content: content,
-      image: formData.get('image') || '',
+      image: featuredImage,
       category: formData.get('category') || 'General',
       author: formData.get('author') || 'Team DSJ',
       date: formData.get('date') ? new Date(formData.get('date') as string).toISOString() : new Date().toISOString(),
@@ -68,8 +218,8 @@ export function BlogForm({ blog, onSuccess, onCancel }: BlogFormProps) {
     setError('');
 
     const formData = new FormData(e.currentTarget);
-    // Add the react-quill content to formData
     formData.set('content', content);
+    formData.set('image', featuredImage);
 
     try {
       if (isEditing) {
@@ -164,15 +314,64 @@ export function BlogForm({ blog, onSuccess, onCancel }: BlogFormProps) {
             <h3 className="text-lg font-semibold text-navy-900 border-b border-slate-100 pb-2">Meta & Media</h3>
             
             <div>
-              <label htmlFor="image" className="block text-sm font-medium text-slate-700 mb-1">Featured Image URL</label>
-              <input
-                type="text"
-                id="image"
-                name="image"
-                defaultValue={blog?.image}
-                className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors"
-                placeholder="/images/blog/cover.webp"
-              />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Featured Image</label>
+              
+              <div 
+                className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-lg ${featuredImageProgress !== null ? 'border-primary-500 bg-primary-50' : 'border-slate-300 hover:border-primary-400'} cursor-pointer`}
+                onClick={() => openMediaModal('featured')}
+              >
+                <div className="space-y-1 text-center w-full">
+                  {featuredImage ? (
+                    <div className="relative inline-block w-full">
+                      <div className="relative h-32 w-full aspect-video rounded-lg overflow-hidden mb-4">
+                        <Image 
+                          src={featuredImage} 
+                          alt="Preview" 
+                          fill 
+                          className="object-cover"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFeaturedImage('');
+                        }}
+                        className="absolute -top-2 -right-2 bg-red-100 text-red-600 rounded-full p-1 hover:bg-red-200"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <UploadCloud className="mx-auto h-12 w-12 text-slate-400" />
+                  )}
+                  
+                  {featuredImageProgress !== null ? (
+                    <div className="w-full max-w-xs mx-auto">
+                      <div className="flex justify-between text-xs text-primary-600 mb-1">
+                        <span>Uploading...</span>
+                        <span>{featuredImageProgress}%</span>
+                      </div>
+                      <div className="w-full bg-slate-200 rounded-full h-1.5">
+                        <div 
+                          className="bg-primary-600 h-1.5 rounded-full transition-all duration-300" 
+                          style={{ width: `${featuredImageProgress}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex text-sm text-slate-600 justify-center">
+                      <span className="relative rounded-md font-medium text-primary-600 hover:text-primary-500">
+                        Select or Upload Image
+                      </span>
+                    </div>
+                  )}
+                  <p className="text-xs text-slate-500">
+                    PNG, JPG, GIF, WEBP up to 2MB
+                  </p>
+                </div>
+              </div>
+              <input type="hidden" name="image" value={featuredImage || '/blog/cover.webp'} />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -230,7 +429,9 @@ export function BlogForm({ blog, onSuccess, onCancel }: BlogFormProps) {
       <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
         <h3 className="text-lg font-semibold text-navy-900 border-b border-slate-100 pb-2">Article Content</h3>
         <div className="prose-editor min-h-[400px]">
+          {/* @ts-ignore - dynamic import ref type issue */}
           <ReactQuill 
+            forwardedRef={quillRef}
             theme="snow" 
             value={content} 
             onChange={setContent} 
@@ -265,6 +466,127 @@ export function BlogForm({ blog, onSuccess, onCancel }: BlogFormProps) {
           )}
         </button>
       </div>
+
+      {/* Media Library Modal */}
+      {isMediaModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <div className="flex justify-between items-center p-6 border-b border-slate-200">
+              <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <ImageIcon className="w-6 h-6 text-primary-600" />
+                Media Library
+              </h3>
+              <button
+                type="button"
+                onClick={() => setIsMediaModalOpen(false)}
+                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex border-b border-slate-200">
+              <button
+                type="button"
+                className={`flex-1 py-3 text-sm font-medium transition-colors ${mediaActiveTab === 'upload' ? 'border-b-2 border-primary-600 text-primary-600' : 'text-slate-500 hover:text-slate-700'}`}
+                onClick={() => setMediaActiveTab('upload')}
+              >
+                Upload New Image
+              </button>
+              <button
+                type="button"
+                className={`flex-1 py-3 text-sm font-medium transition-colors ${mediaActiveTab === 'library' ? 'border-b-2 border-primary-600 text-primary-600' : 'text-slate-500 hover:text-slate-700'}`}
+                onClick={() => setMediaActiveTab('library')}
+              >
+                Media Library
+              </button>
+            </div>
+
+            <div className="p-6 overflow-y-auto flex-1 bg-slate-50/50">
+              {mediaActiveTab === 'upload' ? (
+                <div 
+                  className="flex justify-center items-center h-64 px-6 pt-5 pb-6 border-2 border-dashed rounded-xl border-slate-300 hover:border-primary-400 bg-white"
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                >
+                  <div className="space-y-2 text-center">
+                    <UploadCloud className="mx-auto h-12 w-12 text-slate-400" />
+                    <div className="flex text-sm text-slate-600 justify-center">
+                      <label className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500 focus-within:outline-none">
+                        <span>Upload a file</span>
+                        <input 
+                          type="file" 
+                          className="sr-only" 
+                          accept="image/png, image/jpeg, image/gif, image/webp"
+                          onChange={(e) => {
+                            if (e.target.files && e.target.files.length > 0) {
+                              handleFeaturedImageUpload(e.target.files[0]).then((url: any) => {
+                                if (url) handleImageSelect(url);
+                              });
+                            }
+                          }}
+                        />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      PNG, JPG, GIF, WEBP up to 2MB
+                    </p>
+                    {featuredImageProgress !== null && (
+                      <div className="w-full max-w-xs mx-auto mt-4">
+                        <div className="flex justify-between text-xs text-primary-600 mb-1">
+                          <span>Uploading...</span>
+                          <span>{featuredImageProgress}%</span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-1.5">
+                          <div 
+                            className="bg-primary-600 h-1.5 rounded-full transition-all duration-300" 
+                            style={{ width: `${featuredImageProgress}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="h-full min-h-[300px]">
+                  {isLoadingLibrary ? (
+                    <div className="flex flex-col items-center justify-center h-full text-slate-400 space-y-3">
+                      <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
+                      <p>Loading images...</p>
+                    </div>
+                  ) : libraryImages.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-full text-slate-400 space-y-3 bg-white rounded-xl border border-slate-200 border-dashed py-12">
+                      <ImageIcon className="w-12 h-12 text-slate-300" />
+                      <p>No images found in library.</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {libraryImages.map((img) => (
+                        <div 
+                          key={img.name}
+                          onClick={() => handleImageSelect(img.url)}
+                          className="group relative aspect-square rounded-xl overflow-hidden border border-slate-200 bg-white cursor-pointer hover:ring-2 hover:ring-primary-500 hover:border-transparent transition-all"
+                        >
+                          <Image
+                            src={img.url}
+                            alt={img.name}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 translate-y-full group-hover:translate-y-0 transition-transform">
+                            <p className="text-white text-xs truncate" title={img.name}>{img.name}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 }
