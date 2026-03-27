@@ -3,10 +3,23 @@ import fs from 'fs/promises';
 import path from 'path';
 import { list } from '@vercel/blob';
 
+// Ensure this route is evaluated dynamically, especially when reading env vars
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
-    // If Vercel Blob is configured (usually in Production)
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
+    // Check if we are in production environment
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+
+    // If Vercel Blob is configured OR we are in production
+    if (process.env.BLOB_READ_WRITE_TOKEN || isProduction) {
+      if (!process.env.BLOB_READ_WRITE_TOKEN) {
+        console.error('Missing BLOB_READ_WRITE_TOKEN in production environment.');
+        // Return empty array instead of failing, so the UI doesn't crash, 
+        // but log the error so we know it's missing.
+        return NextResponse.json({ images: [] });
+      }
+
       try {
         const { blobs } = await list({ prefix: 'blog/' });
         

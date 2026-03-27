@@ -33,8 +33,19 @@ export async function POST(request: NextRequest) {
     const extension = file.name.split('.').pop();
     const filename = `${slug}-${timestamp}.${extension}`;
 
-    // If Vercel Blob is configured (usually in Production)
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
+    // Check if we are in production environment
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+
+    // If Vercel Blob is configured OR we are in production (force Blob in prod)
+    if (process.env.BLOB_READ_WRITE_TOKEN || isProduction) {
+      if (!process.env.BLOB_READ_WRITE_TOKEN) {
+        console.error('Missing BLOB_READ_WRITE_TOKEN in production environment.');
+        return NextResponse.json(
+          { error: 'Vercel Blob is not configured. Please link a Blob store in Vercel Dashboard and REDEPLOY.' }, 
+          { status: 500 }
+        );
+      }
+
       try {
         const blob = await put(`blog/${filename}`, file, {
           access: 'public',
