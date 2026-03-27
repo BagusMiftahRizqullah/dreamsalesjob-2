@@ -1,9 +1,36 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
+import { list } from '@vercel/blob';
 
 export async function GET() {
   try {
+    // If Vercel Blob is configured (usually in Production)
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      try {
+        const { blobs } = await list({ prefix: 'blog/' });
+        
+        const validExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+        const imageFiles = blobs.filter(blob => {
+          const ext = path.extname(blob.pathname).toLowerCase();
+          return validExtensions.includes(ext);
+        });
+
+        const filesWithStats = imageFiles.map(blob => ({
+          name: path.basename(blob.pathname),
+          url: blob.url,
+          mtime: new Date(blob.uploadedAt).getTime()
+        }));
+
+        filesWithStats.sort((a, b) => b.mtime - a.mtime);
+        return NextResponse.json({ images: filesWithStats });
+      } catch (blobError) {
+        console.error('Error reading from Vercel Blob:', blobError);
+        return NextResponse.json({ error: 'Failed to fetch images from cloud storage' }, { status: 500 });
+      }
+    }
+
+    // Fallback for local development
     const dirPath = path.join(process.cwd(), 'public/blog');
     
     // Check if directory exists

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
+import { put } from '@vercel/blob';
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,7 +33,24 @@ export async function POST(request: NextRequest) {
     const extension = file.name.split('.').pop();
     const filename = `${slug}-${timestamp}.${extension}`;
 
-    // Ensure directory exists
+    // If Vercel Blob is configured (usually in Production)
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      try {
+        const blob = await put(`blog/${filename}`, file, {
+          access: 'public',
+        });
+        return NextResponse.json({
+          url: blob.url,
+          filename: filename,
+          success: true
+        });
+      } catch (blobError) {
+        console.error('Error uploading to Vercel Blob:', blobError);
+        return NextResponse.json({ error: 'Failed to upload to cloud storage' }, { status: 500 });
+      }
+    }
+
+    // Fallback for local development
     const uploadDir = path.join(process.cwd(), 'public/blog');
     try {
       await fs.access(uploadDir);
@@ -40,7 +58,7 @@ export async function POST(request: NextRequest) {
       await fs.mkdir(uploadDir, { recursive: true });
     }
 
-    // Save file
+    // Save file locally
     const filePath = path.join(uploadDir, filename);
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
