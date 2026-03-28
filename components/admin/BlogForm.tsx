@@ -2,7 +2,7 @@
 
 import { useState, useRef, useMemo, useEffect, useCallback } from 'react';
 import { createBlog, updateBlog } from '@/app/admin-dreamsalesjobs/blogs/actions';
-import { Loader2, Eye, UploadCloud, X, Image as ImageIcon } from 'lucide-react';
+import { Loader2, Eye, UploadCloud, X, Image as ImageIcon, Trash2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import 'react-quill/dist/quill.snow.css';
@@ -47,6 +47,7 @@ export function BlogForm({ blog, onSuccess, onCancel }: BlogFormProps) {
   const [mediaActiveTab, setMediaActiveTab] = useState<'upload' | 'library'>('upload');
   const [libraryImages, setLibraryImages] = useState<any[]>([]);
   const [isLoadingLibrary, setIsLoadingLibrary] = useState(false);
+  const [isDeletingImage, setIsDeletingImage] = useState<string | null>(null);
   const [mediaTarget, setMediaTarget] = useState<'featured' | 'editor'>('featured');
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -67,6 +68,35 @@ export function BlogForm({ blog, onSuccess, onCancel }: BlogFormProps) {
       console.error('Failed to fetch library images', err);
     } finally {
       setIsLoadingLibrary(false);
+    }
+  };
+
+  const handleDeleteImage = async (e: React.MouseEvent, url: string, name: string) => {
+    e.stopPropagation();
+    if (!window.confirm(`Are you sure you want to delete ${name}?`)) {
+      return;
+    }
+
+    setIsDeletingImage(url);
+    try {
+      const res = await fetch(`/api/images?url=${encodeURIComponent(url)}`, {
+        method: 'DELETE',
+      });
+      
+      if (res.ok) {
+        setLibraryImages(prev => prev.filter(img => img.url !== url));
+        if (featuredImage === url) {
+          setFeaturedImage('');
+        }
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to delete image');
+      }
+    } catch (err) {
+      console.error('Failed to delete image', err);
+      alert('Failed to delete image');
+    } finally {
+      setIsDeletingImage(null);
     }
   };
 
@@ -572,11 +602,26 @@ export function BlogForm({ blog, onSuccess, onCancel }: BlogFormProps) {
                             src={img.url}
                             alt={img.name}
                             fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            className={`object-cover transition-transform duration-300 ${isDeletingImage === img.url ? 'opacity-50' : 'group-hover:scale-105'}`}
                           />
                           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 translate-y-full group-hover:translate-y-0 transition-transform">
                             <p className="text-white text-xs truncate" title={img.name}>{img.name}</p>
                           </div>
+                          
+                          {/* Delete Button */}
+                          <button
+                            type="button"
+                            onClick={(e) => handleDeleteImage(e, img.url, img.name)}
+                            disabled={isDeletingImage === img.url}
+                            className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 disabled:bg-slate-400"
+                            title="Delete Image"
+                          >
+                            {isDeletingImage === img.url ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="w-4 h-4" />
+                            )}
+                          </button>
                         </div>
                       ))}
                     </div>

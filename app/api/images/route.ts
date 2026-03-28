@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
-import { list } from '@vercel/blob';
+import { list, del } from '@vercel/blob';
 
 // Ensure this route is evaluated dynamically, especially when reading env vars
 export const dynamic = 'force-dynamic';
@@ -81,5 +81,54 @@ export async function GET() {
   } catch (error) {
     console.error('Error reading images directory:', error);
     return NextResponse.json({ error: 'Failed to fetch images' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const urlToDelete = searchParams.get('url');
+
+    if (!urlToDelete) {
+      return NextResponse.json({ error: 'Image URL is required' }, { status: 400 });
+    }
+
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+
+    // If Vercel Blob is configured OR we are in production
+    if (process.env.BLOB_READ_WRITE_TOKEN || isProduction) {
+      if (!process.env.BLOB_READ_WRITE_TOKEN) {
+        return NextResponse.json({ error: 'Vercel Blob is not configured.' }, { status: 500 });
+      }
+
+      try {
+        await del(urlToDelete);
+        return NextResponse.json({ success: true });
+      } catch (blobError) {
+        console.error('Error deleting from Vercel Blob:', blobError);
+        return NextResponse.json({ error: 'Failed to delete image from cloud storage' }, { status: 500 });
+      }
+    }
+
+    // Fallback for local development
+    // The URL will be like /blog/filename.jpg
+    const filename = urlToDelete.split('/').pop();
+    if (!filename) {
+      return NextResponse.json({ error: 'Invalid file URL' }, { status: 400 });
+    }
+
+    const filePath = path.join(process.cwd(), 'public/blog', filename);
+    
+    try {
+      await fs.access(filePath);
+      await fs.unlink(filePath);
+      return NextResponse.json({ success: true });
+    } catch {
+      return NextResponse.json({ error: 'File not found locally' }, { status: 404 });
+    }
+
+  } catch (error) {
+    console.error('Error deleting image:', error);
+    return NextResponse.json({ error: 'Failed to delete image' }, { status: 500 });
   }
 }
