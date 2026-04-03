@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     canonical: '/uk',
   },
 };
-
+// 
 export const dynamic = 'force-dynamic';
 
 export default async function UkPage() {
