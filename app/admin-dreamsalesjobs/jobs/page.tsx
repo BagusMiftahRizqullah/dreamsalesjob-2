@@ -1,29 +1,33 @@
-import connectDB from '@/lib/mongodb';
-import Job from '@/lib/models/Job';
-import DestinationModel from '@/lib/models/Destination';
+import prisma from '@/lib/prisma';
 import { JobsClient } from '@/components/admin/JobsClient';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata = {
   title: 'Jobs | CMS Admin',
 };
 
 async function getJobs() {
-  await connectDB();
-  const jobs = await Job.find().sort({ createdAt: -1 }).lean();
+  const jobs = await prisma.job.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
   
   // Serialize data to pass to Client Component safely
   return jobs.map(job => ({
     ...job,
-    _id: job._id.toString(),
-    createdAt: (job as any).createdAt?.toISOString(),
-    updatedAt: (job as any).updatedAt?.toISOString(),
-    postedDate: (job as any).postedDate?.toISOString(),
+    _id: job.id,
+    createdAt: job.createdAt?.toISOString(),
+    updatedAt: job.updatedAt?.toISOString(),
+    postedDate: job.postedDate?.toISOString(),
   }));
 }
 
 async function getDestinations() {
-  await connectDB();
-  const destinations = await DestinationModel.find({ isActive: true }).sort({ name: 1 }).lean();
+  const destinations = await prisma.destination.findMany({
+    where: { isActive: true },
+    orderBy: { name: 'asc' }
+  });
   return destinations.map(dest => ({
     slug: dest.slug,
     name: dest.name,

@@ -1,21 +1,23 @@
-import connectDB from '@/lib/mongodb';
-import Application from '@/lib/models/Application';
+import prisma from '@/lib/prisma';
 import { ApplicationsClient } from '@/components/admin/ApplicationsClient';
 
 export const metadata = {
   title: 'Manage Applications | CMS Admin',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function ApplicationsPage() {
-  await connectDB();
-  
-  const applications = await Application.find().sort({ createdAt: -1 }).lean();
+  const applications = await prisma.application.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
 
   const serialized = applications.map(app => ({
     ...app,
-    _id: app._id.toString(),
-    createdAt: (app as any).createdAt?.toISOString(),
-    updatedAt: (app as any).updatedAt?.toISOString(),
+    _id: app.id,
+    createdAt: app.createdAt?.toISOString(),
+    updatedAt: app.updatedAt?.toISOString(),
   }));
 
   return (

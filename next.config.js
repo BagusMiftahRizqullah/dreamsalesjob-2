@@ -48,6 +48,46 @@ const nextConfig = {
         destination: 'https://dreamsalesjobs.com/destinations/indonesia',
         permanent: true,
       },
+      {
+        source: '/Cambodia',
+        destination: 'https://dreamsalesjobs.com/destinations/salesjobscambodia',
+        permanent: true,
+      },
+      {
+        source: '/cambodia',
+        destination: 'https://dreamsalesjobs.com/destinations/salesjobscambodia',
+        permanent: true,
+      },
+      {
+        source: '/salesjobscambodia',
+        destination: 'https://dreamsalesjobs.com/destinations/salesjobscambodia',
+        permanent: true,
+      },
+      {
+        source: '/United%20Kingdom',
+        destination: 'https://dreamsalesjobs.com/destinations/salesjobsunitedkingdom',
+        permanent: true,
+      },
+      {
+        source: '/United-Kingdom',
+        destination: 'https://dreamsalesjobs.com/destinations/salesjobsunitedkingdom',
+        permanent: true,
+      },
+      {
+        source: '/united-kingdom',
+        destination: 'https://dreamsalesjobs.com/destinations/salesjobsunitedkingdom',
+        permanent: true,
+      },
+      {
+        source: '/unitedkingdom',
+        destination: 'https://dreamsalesjobs.com/destinations/salesjobsunitedkingdom',
+        permanent: true,
+      },
+      {
+        source: '/salesjobsunitedkingdom',
+        destination: 'https://dreamsalesjobs.com/destinations/salesjobsunitedkingdom',
+        permanent: true,
+      },
     ];
   },
   images: {

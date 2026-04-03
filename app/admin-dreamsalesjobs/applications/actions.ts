@@ -1,13 +1,14 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import connectDB from '@/lib/mongodb';
-import Application from '@/lib/models/Application';
+import prisma from '@/lib/prisma';
 
 export async function updateApplicationStatus(id: string, status: string) {
   try {
-    await connectDB();
-    await Application.findByIdAndUpdate(id, { status });
+    await prisma.application.update({
+      where: { id },
+      data: { status }
+    });
     revalidatePath('/admin-dreamsalesjobs/applications');
     return { success: true };
   } catch (error) {
@@ -18,8 +19,9 @@ export async function updateApplicationStatus(id: string, status: string) {
 
 export async function deleteApplication(id: string) {
   try {
-    await connectDB();
-    await Application.findByIdAndDelete(id);
+    await prisma.application.delete({
+      where: { id }
+    });
     revalidatePath('/admin-dreamsalesjobs/applications');
     return { success: true };
   } catch (error) {

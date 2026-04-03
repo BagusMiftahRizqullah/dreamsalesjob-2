@@ -1,6 +1,5 @@
 import { BlogsClient } from '@/components/admin/BlogsClient';
-import connectDB from '@/lib/mongodb';
-import BlogModel from '@/lib/models/Blog';
+import prisma from '@/lib/prisma';
 
 export const metadata = {
   title: 'Manage Blogs | CMS Admin',
@@ -9,16 +8,16 @@ export const metadata = {
 export const revalidate = 0;
 
 export default async function BlogsAdminPage() {
-  await connectDB();
-  
-  const blogs = await BlogModel.find().sort({ date: -1 }).lean();
+  const blogs = await prisma.blog.findMany({
+    orderBy: { date: 'desc' }
+  });
 
   const serialized = blogs.map(blog => ({
     ...blog,
-    _id: blog._id.toString(),
-    date: (blog as any).date?.toISOString(),
-    createdAt: (blog as any).createdAt?.toISOString(),
-    updatedAt: (blog as any).updatedAt?.toISOString(),
+    _id: blog.id,
+    date: blog.date?.toISOString(),
+    createdAt: blog.createdAt?.toISOString(),
+    updatedAt: blog.updatedAt?.toISOString(),
   }));
 
   return (

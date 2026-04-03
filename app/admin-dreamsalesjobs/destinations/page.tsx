@@ -1,6 +1,5 @@
 import { DestinationsClient } from '@/components/admin/DestinationsClient';
-import connectDB from '@/lib/mongodb';
-import DestinationModel from '@/lib/models/Destination';
+import prisma from '@/lib/prisma';
 
 export const metadata = {
   title: 'Manage Destinations | CMS Admin',
@@ -9,16 +8,16 @@ export const metadata = {
 export const revalidate = 0; // Don't cache admin pages
 
 export default async function DestinationsAdminPage() {
-  await connectDB();
-  
   // Fetch destinations (both active and inactive)
-  const destinations = await DestinationModel.find().sort({ createdAt: -1 }).lean();
+  const destinations = await prisma.destination.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
 
   const serialized = destinations.map(dest => ({
     ...dest,
-    _id: dest._id.toString(),
-    createdAt: (dest as any).createdAt?.toISOString(),
-    updatedAt: (dest as any).updatedAt?.toISOString(),
+    _id: dest.id,
+    createdAt: dest.createdAt?.toISOString(),
+    updatedAt: dest.updatedAt?.toISOString(),
   }));
 
   return (

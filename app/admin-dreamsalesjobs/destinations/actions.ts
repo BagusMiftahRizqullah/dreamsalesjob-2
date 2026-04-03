@@ -1,28 +1,26 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import connectDB from '@/lib/mongodb';
-import Destination from '@/lib/models/Destination';
+import prisma from '@/lib/prisma';
 
 export async function createDestination(formData: FormData) {
-  await connectDB();
-  
   const destData = {
-    slug: formData.get('slug'),
-    name: formData.get('name'),
-    description: formData.get('description'),
-    image: formData.get('image'),
+    slug: formData.get('slug') as string,
+    name: formData.get('name') as string,
+    description: formData.get('description') as string,
+    image: formData.get('image') as string,
     stats: {
-      averageEarnings: formData.get('stats.averageEarnings'),
-      costOfLiving: formData.get('stats.costOfLiving'),
-      visaType: formData.get('stats.visaType'),
+      averageEarnings: formData.get('stats.averageEarnings') as string,
+      costOfLiving: formData.get('stats.costOfLiving') as string,
+      visaType: formData.get('stats.visaType') as string,
     },
     isActive: formData.get('isActive') === 'on',
   };
 
   try {
-    const newDest = new Destination(destData);
-    await newDest.save();
+    await prisma.destination.create({
+      data: destData
+    });
     revalidatePath('/admin-dreamsalesjobs/destinations');
     revalidatePath('/destinations');
     return { success: true };
@@ -33,23 +31,24 @@ export async function createDestination(formData: FormData) {
 }
 
 export async function updateDestination(id: string, formData: FormData) {
-  await connectDB();
-  
   const destData = {
-    slug: formData.get('slug'),
-    name: formData.get('name'),
-    description: formData.get('description'),
-    image: formData.get('image'),
+    slug: formData.get('slug') as string,
+    name: formData.get('name') as string,
+    description: formData.get('description') as string,
+    image: formData.get('image') as string,
     stats: {
-      averageEarnings: formData.get('stats.averageEarnings'),
-      costOfLiving: formData.get('stats.costOfLiving'),
-      visaType: formData.get('stats.visaType'),
+      averageEarnings: formData.get('stats.averageEarnings') as string,
+      costOfLiving: formData.get('stats.costOfLiving') as string,
+      visaType: formData.get('stats.visaType') as string,
     },
     isActive: formData.get('isActive') === 'on',
   };
 
   try {
-    await Destination.findByIdAndUpdate(id, destData);
+    await prisma.destination.update({
+      where: { id },
+      data: destData
+    });
     revalidatePath('/admin-dreamsalesjobs/destinations');
     revalidatePath('/destinations');
     return { success: true };
@@ -60,9 +59,10 @@ export async function updateDestination(id: string, formData: FormData) {
 }
 
 export async function deleteDestination(id: string) {
-  await connectDB();
   try {
-    await Destination.findByIdAndDelete(id);
+    await prisma.destination.delete({
+      where: { id }
+    });
     revalidatePath('/admin-dreamsalesjobs/destinations');
     revalidatePath('/destinations');
     return { success: true };

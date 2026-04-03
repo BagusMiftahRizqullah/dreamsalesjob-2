@@ -2,10 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { Job, BlogPost, Testimonial, Destination } from '@/types';
-import connectDB from './mongodb';
-import JobModel from './models/Job';
-import DestinationModel from './models/Destination';
-import BlogModel from './models/Blog';
+import prisma from './prisma';
 
 const postsDirectory = path.join(process.cwd(), 'content/blog');
 const testimonialsPath = path.join(process.cwd(), 'content/testimonials.json');
@@ -14,11 +11,13 @@ const testimonialsPath = path.join(process.cwd(), 'content/testimonials.json');
 
 export async function getJobsFromDB(): Promise<Job[]> {
   try {
-    await connectDB();
-    const jobs = await JobModel.find({ isActive: true }).sort({ postedDate: -1 }).lean();
+    const jobs = await prisma.job.findMany({
+      where: { isActive: true },
+      orderBy: { postedDate: 'desc' }
+    });
     
     return jobs.map((job: any) => ({
-      id: job._id.toString(),
+      id: job.id,
       slug: job.slug,
       title: job.title,
       destination: job.destination,
@@ -45,24 +44,25 @@ export async function getAllJobs(): Promise<Job[]> {
 
 export async function getJobBySlug(slug: string): Promise<Job | null> {
   try {
-    await connectDB();
-    const job = await JobModel.findOne({ slug, isActive: true }).lean();
+    const job = await prisma.job.findUnique({
+      where: { slug, isActive: true }
+    });
     
     if (!job) return null;
     
     return {
-      id: job._id.toString(),
+      id: job.id,
       slug: job.slug,
       title: job.title,
       destination: job.destination,
       type: job.type,
       location: job.location,
-      salary: job.salary,
+      salary: job.salary as any,
       description: job.description,
-      requirements: job.requirements || [],
-      responsibilities: job.responsibilities || [],
+      requirements: job.requirements as any || [],
+      responsibilities: job.responsibilities as any || [],
       postedDate: job.postedDate.toISOString(),
-      employer: job.employer,
+      employer: job.employer as any,
       industry: job.industry,
       seniority: job.seniority,
     } as Job;
@@ -81,9 +81,11 @@ export async function getJobsByDestination(destination: string): Promise<Job[]> 
 
 export async function getAllPosts(): Promise<BlogPost[]> {
   try {
-    await connectDB();
-    const posts = await BlogModel.find({ isActive: true }).sort({ date: -1 }).lean();
-    return posts.map(post => ({
+    const posts = await prisma.blog.findMany({
+      where: { isActive: true },
+      orderBy: { date: 'desc' }
+    });
+    return posts.map((post: any) => ({
       slug: post.slug,
       title: post.title,
       excerpt: post.excerpt,
@@ -101,8 +103,9 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
   try {
-    await connectDB();
-    const post = await BlogModel.findOne({ slug, isActive: true }).lean();
+    const post = await prisma.blog.findUnique({
+      where: { slug, isActive: true }
+    });
     if (!post) return undefined;
     return {
       slug: post.slug,
@@ -135,8 +138,9 @@ export function getAllTestimonials(): Testimonial[] {
 
 export async function getDestinationsFromDB(): Promise<Destination[]> {
   try {
-    await connectDB();
-    const destinations = await DestinationModel.find({ isActive: true }).lean();
+    const destinations = await prisma.destination.findMany({
+      where: { isActive: true }
+    });
     
     return destinations.map((dest: any) => ({
       slug: dest.slug,
@@ -153,15 +157,16 @@ export async function getDestinationsFromDB(): Promise<Destination[]> {
 
 export async function getDestinationBySlug(slug: string): Promise<Destination | null> {
   try {
-    await connectDB();
-    const dest = await DestinationModel.findOne({ slug, isActive: true }).lean();
+    const dest = await prisma.destination.findUnique({
+      where: { slug, isActive: true }
+    });
     if (!dest) return null;
     return {
       slug: dest.slug,
       name: dest.name,
       description: dest.description,
       image: dest.image,
-      stats: dest.stats,
+      stats: dest.stats as any,
     } as Destination;
   } catch (error) {
     console.error('Failed to fetch destination by slug from DB:', error);

@@ -1,14 +1,11 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import connectDB from '@/lib/mongodb';
-import Job from '@/lib/models/Job';
+import prisma from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 
 // Create a new job
 export async function createJob(formData: FormData) {
-  await connectDB();
-
   // Convert FormData to object and handle arrays properly
   const rawData = Object.fromEntries(formData.entries());
   
@@ -19,30 +16,30 @@ export async function createJob(formData: FormData) {
   }
 
   const jobData = {
-    title: rawData.title,
+    title: rawData.title as string,
     slug,
-    destination: rawData.destination,
-    type: rawData.type,
-    location: rawData.location,
-    description: rawData.description,
-    industry: rawData.industry,
-    seniority: rawData.seniority,
+    destination: rawData.destination as string,
+    type: (rawData.type as string) || 'full-time',
+    location: rawData.location as string,
+    description: rawData.description as string,
+    industry: (rawData.industry as string) || '',
+    seniority: (rawData.seniority as string) || '',
     isActive: rawData.isActive === 'on',
     
     // Parse nested objects
     salary: {
       min: Number(rawData['salary.min']) || 0,
       max: Number(rawData['salary.max']) || 0,
-      currency: rawData['salary.currency'] || 'USD',
-      period: rawData['salary.period'] || 'month',
+      currency: (rawData['salary.currency'] as string) || 'USD',
+      period: (rawData['salary.period'] as string) || 'month',
     },
     
     employer: {
-      name: rawData['employer.name'],
-      logo: rawData['employer.logo'] || '',
+      name: rawData['employer.name'] as string,
+      logo: (rawData['employer.logo'] as string) || '',
       verified: rawData['employer.verified'] === 'on',
-      description: rawData['employer.description'] || '',
-      website: rawData['employer.website'] || '',
+      description: (rawData['employer.description'] as string) || '',
+      website: (rawData['employer.website'] as string) || '',
     },
 
     // Handle multiline text areas as arrays for requirements and responsibilities
@@ -58,8 +55,9 @@ export async function createJob(formData: FormData) {
   };
 
   try {
-    const newJob = new Job(jobData);
-    await newJob.save();
+    await prisma.job.create({
+      data: jobData
+    });
     revalidatePath('/admin-dreamsalesjobs/jobs');
     return { success: true };
   } catch (error) {
@@ -70,34 +68,32 @@ export async function createJob(formData: FormData) {
 
 // Update an existing job
 export async function updateJob(id: string, formData: FormData) {
-  await connectDB();
-
   const rawData = Object.fromEntries(formData.entries());
 
   const jobData = {
-    title: rawData.title,
-    slug: rawData.slug,
-    destination: rawData.destination,
-    type: rawData.type,
-    location: rawData.location,
-    description: rawData.description,
-    industry: rawData.industry,
-    seniority: rawData.seniority,
+    title: rawData.title as string,
+    slug: rawData.slug as string,
+    destination: rawData.destination as string,
+    type: (rawData.type as string) || 'full-time',
+    location: rawData.location as string,
+    description: rawData.description as string,
+    industry: (rawData.industry as string) || '',
+    seniority: (rawData.seniority as string) || '',
     isActive: rawData.isActive === 'on',
     
     salary: {
       min: Number(rawData['salary.min']) || 0,
       max: Number(rawData['salary.max']) || 0,
-      currency: rawData['salary.currency'] || 'USD',
-      period: rawData['salary.period'] || 'month',
+      currency: (rawData['salary.currency'] as string) || 'USD',
+      period: (rawData['salary.period'] as string) || 'month',
     },
     
     employer: {
-      name: rawData['employer.name'],
-      logo: rawData['employer.logo'] || '',
+      name: rawData['employer.name'] as string,
+      logo: (rawData['employer.logo'] as string) || '',
       verified: rawData['employer.verified'] === 'on',
-      description: rawData['employer.description'] || '',
-      website: rawData['employer.website'] || '',
+      description: (rawData['employer.description'] as string) || '',
+      website: (rawData['employer.website'] as string) || '',
     },
 
     requirements: (rawData.requirements as string)
@@ -112,7 +108,10 @@ export async function updateJob(id: string, formData: FormData) {
   };
 
   try {
-    await Job.findByIdAndUpdate(id, jobData);
+    await prisma.job.update({
+      where: { id },
+      data: jobData
+    });
     revalidatePath('/admin-dreamsalesjobs/jobs');
     return { success: true };
   } catch (error) {
@@ -123,10 +122,10 @@ export async function updateJob(id: string, formData: FormData) {
 
 // Delete a job
 export async function deleteJob(id: string) {
-  await connectDB();
-  
   try {
-    await Job.findByIdAndDelete(id);
+    await prisma.job.delete({
+      where: { id }
+    });
     revalidatePath('/admin-dreamsalesjobs/jobs');
   } catch (error) {
     console.error('Failed to delete job:', error);

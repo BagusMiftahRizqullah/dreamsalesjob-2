@@ -1,13 +1,13 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import connectDB from '@/lib/mongodb';
-import Blog from '@/lib/models/Blog';
+import prisma from '@/lib/prisma';
 
 export async function deleteBlog(id: string) {
-  await connectDB();
   try {
-    await Blog.findByIdAndDelete(id);
+    await prisma.blog.delete({
+      where: { id }
+    });
     revalidatePath('/admin-dreamsalesjobs/blogs');
     revalidatePath('/blog');
     return { success: true };
@@ -18,22 +18,22 @@ export async function deleteBlog(id: string) {
 }
 
 export async function createBlog(formData: FormData) {
-  await connectDB();
-  
   const blogData = {
-    slug: formData.get('slug'),
-    title: formData.get('title'),
-    excerpt: formData.get('excerpt'),
-    content: formData.get('content'),
-    image: formData.get('image'),
-    category: formData.get('category'),
-    author: formData.get('author'),
+    slug: formData.get('slug') as string,
+    title: formData.get('title') as string,
+    excerpt: (formData.get('excerpt') as string) || '',
+    content: formData.get('content') as string,
+    image: (formData.get('image') as string) || '',
+    category: (formData.get('category') as string) || 'General',
+    author: (formData.get('author') as string) || 'Team DSJ',
     date: formData.get('date') ? new Date(formData.get('date') as string) : new Date(),
     isActive: formData.get('isActive') === 'on',
   };
 
   try {
-    await Blog.create(blogData);
+    await prisma.blog.create({
+      data: blogData
+    });
     revalidatePath('/admin-dreamsalesjobs/blogs');
     revalidatePath('/blog');
     return { success: true };
@@ -44,22 +44,23 @@ export async function createBlog(formData: FormData) {
 }
 
 export async function updateBlog(id: string, formData: FormData) {
-  await connectDB();
-  
   const blogData = {
-    slug: formData.get('slug'),
-    title: formData.get('title'),
-    excerpt: formData.get('excerpt'),
-    content: formData.get('content'),
-    image: formData.get('image'),
-    category: formData.get('category'),
-    author: formData.get('author'),
+    slug: formData.get('slug') as string,
+    title: formData.get('title') as string,
+    excerpt: (formData.get('excerpt') as string) || '',
+    content: formData.get('content') as string,
+    image: (formData.get('image') as string) || '',
+    category: (formData.get('category') as string) || 'General',
+    author: (formData.get('author') as string) || 'Team DSJ',
     date: formData.get('date') ? new Date(formData.get('date') as string) : new Date(),
     isActive: formData.get('isActive') === 'on',
   };
 
   try {
-    await Blog.findByIdAndUpdate(id, blogData);
+    await prisma.blog.update({
+      where: { id },
+      data: blogData
+    });
     revalidatePath('/admin-dreamsalesjobs/blogs');
     revalidatePath('/blog');
     return { success: true };

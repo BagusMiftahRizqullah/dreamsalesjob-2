@@ -153,6 +153,8 @@ function ApplyForm() {
               <option value="salesjobsbali">Bali, Indonesia</option>
               <option value="salesjobsthailand">Thailand</option>
               <option value="salesjobsvietnam">Vietnam</option>
+              <option value="salesjobscambodia">Cambodia</option>
+              <option value="salesjobsunitedkingdom">United Kingdom</option>
               <option value="remotesalesjobs">Remote</option>
             </select>
             {errors.destination && (
