@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Search, Eye, Trash2, X, Download } from 'lucide-react';
+import { Search, Eye, Trash2, X, Download, Loader2 } from 'lucide-react';
 import { updateApplicationStatus, deleteApplication } from '@/app/admin-dreamsalesjobs/applications/actions';
 import { Pagination } from './Pagination';
 import { formatDate } from '@/lib/utils';
@@ -15,6 +15,8 @@ export function ApplicationsClient({ initialApplications }: ApplicationsClientPr
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedApp, setSelectedApp] = useState<any | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState<string | null>(null);
   const itemsPerPage = 10;
 
   const filteredApps = useMemo(() => {
@@ -35,6 +37,7 @@ export function ApplicationsClient({ initialApplications }: ApplicationsClientPr
   const paginatedApps = filteredApps.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const handleStatusChange = async (id: string, newStatus: string) => {
+    setIsUpdatingStatus(id);
     try {
       await updateApplicationStatus(id, newStatus);
       setApplications(applications.map(app => 
@@ -45,11 +48,14 @@ export function ApplicationsClient({ initialApplications }: ApplicationsClientPr
       }
     } catch (error) {
       alert('Failed to update status');
+    } finally {
+      setIsUpdatingStatus(null);
     }
   };
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this application?')) {
+      setIsDeleting(id);
       try {
         await deleteApplication(id);
         setApplications(applications.filter(a => a._id !== id));
@@ -58,6 +64,8 @@ export function ApplicationsClient({ initialApplications }: ApplicationsClientPr
         }
       } catch (error) {
         alert('Failed to delete application');
+      } finally {
+        setIsDeleting(null);
       }
     }
   };
@@ -142,10 +150,15 @@ export function ApplicationsClient({ initialApplications }: ApplicationsClientPr
                     </button>
                     <button
                       onClick={() => handleDelete(app._id)}
-                      className="p-2 text-slate-400 hover:text-red-600 transition-colors"
+                      disabled={isDeleting === app._id}
+                      className="p-2 text-slate-400 hover:text-red-600 transition-colors disabled:opacity-50"
                       title="Delete"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      {isDeleting === app._id ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Trash2 className="w-4 h-4" />
+                      )}
                     </button>
                   </div>
                 </td>

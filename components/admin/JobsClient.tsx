@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Plus, Edit, Trash2, X, Search } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Search, Loader2 } from 'lucide-react';
 import { deleteJob } from '@/app/admin-dreamsalesjobs/jobs/actions';
 import { JobForm } from '@/components/admin/JobForm';
 import { Pagination } from '@/components/admin/Pagination';
@@ -17,6 +17,7 @@ export function JobsClient({ jobs, destinations }: JobsClientProps) {
   const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
   const itemsPerPage = 10;
 
   const filteredJobs = useMemo(() => {
@@ -130,17 +131,27 @@ export function JobsClient({ jobs, destinations }: JobsClientProps) {
                         </button>
                         
                         <form action={async () => {
-                          await deleteJob(job._id);
+                          setIsDeleting(job._id.toString());
+                          try {
+                            await deleteJob(job._id);
+                          } finally {
+                            setIsDeleting(null);
+                          }
                         }}>
                           <button 
                             type="submit"
-                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            disabled={isDeleting === job._id.toString()}
+                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
                             title="Delete"
                             onClick={(e) => {
                               if(!confirm('Are you sure you want to delete this job?')) e.preventDefault();
                             }}
                           >
-                            <Trash2 className="w-4 h-4" />
+                            {isDeleting === job._id.toString() ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="w-4 h-4" />
+                            )}
                           </button>
                         </form>
                       </div>

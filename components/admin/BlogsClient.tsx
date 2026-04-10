@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Search } from 'lucide-react';
+import { Plus, Edit2, Trash2, Search, Loader2 } from 'lucide-react';
 import { BlogForm } from './BlogForm';
 import { Pagination } from './Pagination';
 import { deleteBlog } from '@/app/admin-dreamsalesjobs/blogs/actions';
@@ -17,6 +17,7 @@ export function BlogsClient({ initialBlogs }: BlogsClientProps) {
   const [editingBlog, setEditingBlog] = useState<any | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
   const itemsPerPage = 10;
 
   const filteredBlogs = useMemo(() => {
@@ -35,11 +36,14 @@ export function BlogsClient({ initialBlogs }: BlogsClientProps) {
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this blog post?')) {
+      setIsDeleting(id);
       try {
         await deleteBlog(id);
         setBlogs(blogs.filter(b => b._id.toString() !== id));
       } catch (error) {
         alert('Failed to delete blog');
+      } finally {
+        setIsDeleting(null);
       }
     }
   };
@@ -137,10 +141,15 @@ export function BlogsClient({ initialBlogs }: BlogsClientProps) {
                     </button>
                     <button
                       onClick={() => handleDelete(blog._id.toString())}
-                      className="p-2 text-slate-400 hover:text-red-600 transition-colors"
+                      disabled={isDeleting === blog._id.toString()}
+                      className="p-2 text-slate-400 hover:text-red-600 transition-colors disabled:opacity-50"
                       title="Delete"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      {isDeleting === blog._id.toString() ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Trash2 className="w-4 h-4" />
+                      )}
                     </button>
                   </div>
                 </td>

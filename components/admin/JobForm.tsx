@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Save } from 'lucide-react';
+import { Save, Loader2 } from 'lucide-react';
 import { createJob, updateJob } from '@/app/admin-dreamsalesjobs/jobs/actions';
 import { Button } from '@/components/ui/button';
 
@@ -28,6 +28,7 @@ export function JobForm({ job, destinations, onSuccess, onCancel }: JobFormProps
     } catch (error) {
       console.error(error);
       alert('An error occurred while saving the job.');
+    } finally {
       setIsSubmitting(false);
     }
   }
@@ -168,8 +169,17 @@ export function JobForm({ job, destinations, onSuccess, onCancel }: JobFormProps
         <div className="pt-4 pb-8 flex justify-end gap-3 sticky bottom-0 bg-slate-50/80 backdrop-blur-sm z-10 px-2">
           <Button type="button" variant="outline" onClick={onCancel} className="bg-white">Cancel</Button>
           <Button type="submit" disabled={isSubmitting} className="gap-2 min-w-[120px]">
-            <Save className="w-4 h-4" />
-            {isSubmitting ? 'Saving...' : 'Save Job'}
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4" />
+                Save Job
+              </>
+            )}
           </Button>
         </div>
 

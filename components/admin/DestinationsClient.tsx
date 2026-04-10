@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Search } from 'lucide-react';
+import { Plus, Edit2, Trash2, Search, Loader2 } from 'lucide-react';
 import { DestinationForm } from './DestinationForm';
 import { Pagination } from './Pagination';
 import { deleteDestination } from '@/app/admin-dreamsalesjobs/destinations/actions';
@@ -15,6 +15,7 @@ export function DestinationsClient({ initialDestinations }: DestinationsClientPr
   const [isAdding, setIsAdding] = useState(false);
   const [editingDest, setEditingDest] = useState<any | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -34,11 +35,14 @@ export function DestinationsClient({ initialDestinations }: DestinationsClientPr
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this destination?')) {
+      setIsDeleting(id);
       try {
         await deleteDestination(id);
         setDestinations(destinations.filter(d => d._id.toString() !== id));
       } catch (error) {
         alert('Failed to delete destination');
+      } finally {
+        setIsDeleting(null);
       }
     }
   };
@@ -132,10 +136,15 @@ export function DestinationsClient({ initialDestinations }: DestinationsClientPr
                     </button>
                     <button
                       onClick={() => handleDelete(dest._id.toString())}
-                      className="p-2 text-slate-400 hover:text-red-600 transition-colors"
+                      disabled={isDeleting === dest._id.toString()}
+                      className="p-2 text-slate-400 hover:text-red-600 transition-colors disabled:opacity-50"
                       title="Delete"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      {isDeleting === dest._id.toString() ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Trash2 className="w-4 h-4" />
+                      )}
                     </button>
                   </div>
                 </td>
